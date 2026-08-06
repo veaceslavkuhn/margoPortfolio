@@ -184,17 +184,6 @@ ul {
 	height: 240px;
 	animation: splashSpin 1.6s cubic-bezier(0.5, 0.05, 0.15, 1) both;
 }
-.splash__title {
-	position: absolute;
-	bottom: 22%;
-	font-family: var(--font-display);
-	font-size: clamp(28px, 4vw, 40px);
-	color: var(--primary-blue);
-	text-transform: uppercase;
-	letter-spacing: 0.02em;
-	opacity: 0;
-	animation: splashFadeUp 0.7s ease 0.7s forwards;
-}
 @keyframes splashSpin {
 	0% {
 		transform: scale(0.4) rotate(-45deg);
@@ -209,16 +198,6 @@ ul {
 		opacity: 1;
 	}
 }
-@keyframes splashFadeUp {
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
-}
 @keyframes splashOut {
 	to {
 		opacity: 0;
@@ -229,8 +208,7 @@ ul {
 	.splash {
 		animation: splashOut 0.3s ease 0.1s forwards;
 	}
-	.splash__logo,
-	.splash__title {
+	.splash__logo {
 		animation: none;
 		opacity: 1;
 	}
@@ -348,6 +326,12 @@ ul {
 	display: block;
 	max-width: 40px;
 	max-height: 40px;
+	transition: filter 0.2s ease;
+}
+/* Recolor blue #004EA8 SVGs to red #d54232 on hover via filter chain. */
+.sm-strip__item:hover img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 
 /* -----------------------------
