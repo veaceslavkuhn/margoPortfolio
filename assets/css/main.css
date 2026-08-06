@@ -355,6 +355,7 @@ ul {
 }
 .hero__title .accent {
 	color: var(--primary-red);
+	text-transform: uppercase;
 }
 .hero__title .accent.manic {
 	font-family: var(--font-display);
