@@ -607,7 +607,7 @@ ul {
 .project-card:hover .project-card__tags {
 	transform: translateY(-74px);
 }
-/* "Read more" CTA slides up from below the card on hover. */
+/* "Read more" CTA slides up from below the card on hover. Matches the hero secondary button: blue by default, red when hovered. */
 .project-card__cta {
 	position: absolute;
 	left: 0;
@@ -632,6 +632,13 @@ ul {
 .project-card__cta img {
 	width: 42px;
 	height: 42px;
+}
+.project-card__cta:hover {
+	color: var(--primary-red);
+}
+.project-card__cta:hover img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 .project-card__tag-row {
 	display: flex;
@@ -658,8 +665,19 @@ ul {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
-	border-radius: 0;
 	background: var(--primary-red);
+	clip-path: polygon(
+		50% 0%,
+		61% 35%,
+		98% 35%,
+		68% 57%,
+		79% 91%,
+		50% 70%,
+		21% 91%,
+		32% 57%,
+		2% 35%,
+		39% 35%
+	);
 	flex-shrink: 0;
 }
 
