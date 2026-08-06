@@ -493,7 +493,7 @@ ul {
 	padding: 24px;
 	min-height: 232px;
 	border: 5px solid var(--secondary-yellow);
-	color: var(--primary-red);
+	color: var(--primary-blue);
 }
 .fact-card__title {
 	font-family: var(--font-display);
@@ -508,10 +508,11 @@ ul {
 	font-weight: 400;
 	font-size: var(--fs-body);
 	line-height: 1.5;
-	color: var(--primary-red);
+	color: var(--primary-blue);
 }
 .fact-card__body strong {
-	font-weight: 400;
+	font-weight: 700;
+	color: var(--primary-red);
 }
 
 /* -----------------------------
