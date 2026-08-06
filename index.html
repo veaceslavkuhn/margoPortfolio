@@ -20,45 +20,21 @@
   </div>
 
   <!-- Nav -->
-  <header class="site-nav" role="banner">
-    <div class="site-nav__inner">
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">☰</button>
-
-      <div class="nav-group" id="nav-menu">
-        <a class="nav-link" href="#projects">projects</a>
-        <a class="nav-link" href="about.html">about</a>
-      </div>
-
-      <a class="nav-logo" href="index.html" aria-label="Margo home">
-        <img src="assets/common/logo.svg" alt="Margo logo" />
-      </a>
-
-      <div class="nav-group">
-        <a class="nav-link" href="#" aria-disabled="true">cv</a>
-        <a class="nav-link" href="mailto:mrg3.designs@gmail.com">contact</a>
-      </div>
-    </div>
-  </header>
+  <margo-nav></margo-nav>
 
   <main>
 
     <!-- SM strip -->
-    <nav class="sm-strip" aria-label="Social">
-      <a class="sm-strip__item" href="mailto:mrg3.designs@gmail.com" aria-label="Email"><img src="assets/icons/social-mail.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://www.linkedin.com/in/margarita-liutova-ux-ui-designer/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/social-linkedin.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/social-instagram.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://medium.com/" target="_blank" rel="noopener" aria-label="Medium"><img src="assets/icons/social-medium.svg" alt="" /></a>
-    </nav>
+    <margo-sm-strip></margo-sm-strip>
 
     <!-- Hero -->
     <section class="hero">
       <h1 class="hero__title">
-        <span style="font-family:var(--font-body);font-weight:700;color:var(--primary-blue);">Hi! I&rsquo;m </span><span class="accent">Margo</span><span style="font-family:var(--font-body);font-weight:700;color:var(--primary-blue);">.</span>
+        Hi! I&rsquo;m <span class="accent manic">Margo</span>.
         <br />
-        <span class="accent">UI/UX Designer</span>
-        <span style="font-family:var(--font-body);font-weight:700;color:var(--primary-blue);"> based in Berlin.</span>
+        <span class="accent manic">UI/UX Designer</span> based in Berlin.
       </h1>
-      <p class="hero__sub" style="font-family:var(--font-body);font-weight:300;color:var(--primary-blue);text-transform:none;">
+      <p class="hero__sub">
         I create user-centred clean layouts with empathy,<br />
         love and attention to details.
       </p>
@@ -104,179 +80,55 @@
 
       <div class="project-grid">
         <a class="project-card" href="projects/my-portfolio.html">
-          <span class="project-card__index">(1)</span>
           <div class="project-card__figure"><img src="assets/home/project-my-portfolio.png" alt="My portfolio preview" /></div>
-          <h3 class="project-card__title">My portfolio</h3>
-          <ul class="project-card__tags">
-            <li class="project-card__tag">UI/UX Design</li>
-            <li class="project-card__tag">Graphic Design</li>
-            <li class="project-card__tag">Desktop / Mobile</li>
-          </ul>
+          <h3 class="project-card__title">(1) My Portfolio</h3>
+          <div class="project-card__tags">
+            <div class="project-card__tag-row">
+              <span class="project-card__tag">UI/UX Design</span>
+              <span class="project-card__tag">Graphic Design</span>
+            </div>
+            <span class="project-card__tag">Desktop / Mobile</span>
+          </div>
         </a>
 
         <a class="project-card" href="projects/dkp.html">
-          <span class="project-card__index">(2)</span>
           <div class="project-card__figure"><img src="assets/home/project-dkp.png" alt="DKP preview" /></div>
-          <h3 class="project-card__title">DKP</h3>
-          <ul class="project-card__tags">
-            <li class="project-card__tag">UI/UX Design</li>
-            <li class="project-card__tag">Desktop / Mobile</li>
-          </ul>
+          <h3 class="project-card__title">(2) DKP</h3>
+          <div class="project-card__tags">
+            <span class="project-card__tag">UI/UX Design</span>
+            <span class="project-card__tag">Desktop / Mobile</span>
+          </div>
         </a>
 
         <a class="project-card" href="projects/evolution.html">
-          <span class="project-card__index">(3)</span>
           <div class="project-card__figure"><img src="assets/home/project-evolution.png" alt="Evolution preview" /></div>
-          <h3 class="project-card__title">Evolution</h3>
-          <ul class="project-card__tags">
-            <li class="project-card__tag">UI/UX Design</li>
-            <li class="project-card__tag">Mobile</li>
-          </ul>
+          <h3 class="project-card__title">(3) Evolution</h3>
+          <div class="project-card__tags">
+            <span class="project-card__tag">UI/UX Design</span>
+            <span class="project-card__tag">Mobile</span>
+          </div>
         </a>
 
         <a class="project-card" href="projects/kttw.html">
-          <span class="project-card__index">(4)</span>
           <div class="project-card__figure"><img src="assets/home/project-kttw.png" alt="KTTW preview" /></div>
-          <h3 class="project-card__title">KTTW</h3>
-          <ul class="project-card__tags">
-            <li class="project-card__tag">UX/UI Design</li>
-            <li class="project-card__tag">Desktop / Mobile</li>
-          </ul>
+          <h3 class="project-card__title">(4) KTTW</h3>
+          <div class="project-card__tags">
+            <span class="project-card__tag">UX/UI Design</span>
+            <span class="project-card__tag">Desktop / Mobile</span>
+          </div>
         </a>
       </div>
     </section>
 
     <!-- Testimonials -->
-    <section class="testimonials" aria-labelledby="testimonials-title">
-      <header class="section-head">
-        <h2 class="section-head__title" id="testimonials-title">Testimonials</h2>
-      </header>
-
-      <div class="testimonial-track">
-        <ul class="testimonial-list">
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-thomas.png" alt="Thomas Zervos" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Thomas Zervos</p>
-                <p class="testimonial-card__role">CEO at &ldquo;Vectorial&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/thomas-zervos/?locale=en" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Margo demonstrated solid and practice-oriented expertise in UX/UI design, which she successfully applied at all times. She consistently familiarised herself quickly and confidently with new topics, projects, and tools.&rdquo;</p>
-          </li>
-
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-anny.png" alt="Anny Xu" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Anny Xu</p>
-                <p class="testimonial-card__role">Product Owner at &ldquo;Vectorial&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/anny-xu/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Working with Margo has always been exceptionally smooth. She is reliable, collaborative and someone the team can count on to deliver thoughtful, well-crafted work. Her designs strike a unique balance between&hellip;&rdquo;</p>
-          </li>
-
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-tom.png" alt="Tom Janssens" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Tom Janssens</p>
-                <p class="testimonial-card__role">Creative Technologist and Experiential Designer</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/tmjns/?locale=en" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Working with Margo was a great experience. We worked together on a website rebranding where she took ownership of the direction and stands out not only for her UI design capabilities but also for her soft skills.&rdquo;</p>
-          </li>
-
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-keri.png" alt="Keri Byrne" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Keri Byrne</p>
-                <p class="testimonial-card__role">Product Marketer at &ldquo;Nmbrs&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/keribyrne/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Margo helped build a website and logo design for my ceramic business. Margo was great to work with, she was very direct and communicative. She was also very adaptable and worked fast. She went above and beyond&hellip;&rdquo;</p>
-          </li>
-
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-victoria.png" alt="Victoria Przybylska" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Victoria Przybylska</p>
-                <p class="testimonial-card__role">Startup Mentor</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/victoria-przybylska-startups/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;I worked with Margo on a mental health startup platform, where she handled UX/UI design. Margo was full of empathy, passion, talent, and she has great communication skills that made collaboration smooth and very enjoyable.&rdquo;</p>
-          </li>
-
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-daniel.png" alt="Daniel Nürrenbach" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Daniel Nürrenbach</p>
-                <p class="testimonial-card__role">Founder of &ldquo;mpct.media&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/daniel-n%C3%BCrrenbach-25487520b/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">lorem ipsum</p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="testimonial-nav" role="group" aria-label="Testimonial navigation">
-        <button class="prev" type="button" aria-label="Previous testimonial"><img src="assets/icons/carousel-arrow.svg" alt="" /></button>
-        <button class="next" type="button" aria-label="Next testimonial"><img src="assets/icons/carousel-arrow.svg" alt="" /></button>
-      </div>
-    </section>
+    <margo-testimonials></margo-testimonials>
 
   </main>
 
   <!-- Footer -->
-  <footer class="site-footer">
-    <p class="site-footer__love">I create things with <span class="accent manic">LOVE</span></p>
-    <p class="site-footer__contact"><a class="btn" href="mailto:mrg3.designs@gmail.com">text me</a></p>
+  <margo-footer></margo-footer>
 
-    <div class="site-footer__meta">
-      <span>margowebsite.com</span>
-      <nav aria-label="Footer">
-        <a href="#projects">Projects</a> &nbsp;&nbsp;
-        <a href="about.html">About</a> &nbsp;&nbsp;
-        <a href="#">CV</a> &nbsp;&nbsp;
-        <a href="mailto:mrg3.designs@gmail.com">Contact</a>
-      </nav>
-      <div class="sm">
-        <a href="mailto:mrg3.designs@gmail.com" aria-label="Email"><img src="assets/icons/social-mail.svg" alt="" /></a>
-        <a href="https://www.linkedin.com/in/margarita-liutova-ux-ui-designer/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/social-linkedin.svg" alt="" /></a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/social-instagram.svg" alt="" /></a>
-        <a href="https://medium.com/" target="_blank" rel="noopener" aria-label="Medium"><img src="assets/icons/social-medium.svg" alt="" /></a>
-      </div>
-    </div>
-    <div class="footer-hearts" aria-hidden="true"></div>
-  </footer>
-
+  <script src="assets/js/components.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

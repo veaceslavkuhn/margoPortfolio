@@ -14,32 +14,12 @@
 <body>
 
   <!-- Nav -->
-  <header class="site-nav" role="banner">
-    <div class="site-nav__inner">
-      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">☰</button>
-      <div class="nav-group" id="nav-menu">
-        <a class="nav-link" href="index.html#projects">projects</a>
-        <a class="nav-link" href="about.html" aria-current="page">about</a>
-      </div>
-      <a class="nav-logo" href="index.html" aria-label="Margo home">
-        <img src="assets/common/logo.svg" alt="Margo logo" />
-      </a>
-      <div class="nav-group">
-        <a class="nav-link" href="#" aria-disabled="true">cv</a>
-        <a class="nav-link" href="mailto:mrg3.designs@gmail.com">contact</a>
-      </div>
-    </div>
-  </header>
+  <margo-nav current="about"></margo-nav>
 
   <main>
 
     <!-- SM strip -->
-    <nav class="sm-strip" aria-label="Social">
-      <a class="sm-strip__item" href="mailto:mrg3.designs@gmail.com" aria-label="Email"><img src="assets/icons/social-mail.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://www.linkedin.com/in/margarita-liutova-ux-ui-designer/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/social-linkedin.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/social-instagram.svg" alt="" /></a>
-      <a class="sm-strip__item" href="https://medium.com/" target="_blank" rel="noopener" aria-label="Medium"><img src="assets/icons/social-medium.svg" alt="" /></a>
-    </nav>
+    <margo-sm-strip></margo-sm-strip>
 
     <!-- Hero: photo collage -->
     <section class="about-hero" aria-label="Portrait">
@@ -69,9 +49,9 @@
       </div>
     </section>
 
-    <section class="about-bio">
+    <section class="about-bio about-bio--picture">
       <div class="about-bio__body">
-        <p>
+        <p class="about-bio__body--red">
           <span class="accent">My home is Ukraine, but also Moldova, and the world has been my classroom ever since.</span> Each place has taught me something about light, texture, people, and pace. Thailand especially left a mark: I spent time in a monastery there, which brought a quietness into how I see and make things.
         </p>
         <p>
@@ -82,138 +62,22 @@
         </p>
       </div>
       <div class="about-bio__polaroids">
-        <img src="assets/about/picture-1.svg" alt="Margo" style="transform: rotate(-6deg);" />
+        <img src="assets/about/picture-1.svg" alt="Margo" />
       </div>
     </section>
 
-    <div style="text-align:center; padding: 40px var(--page-pad-x) 60px;">
+    <div class="about-cta">
       <a class="btn" href="mailto:mrg3.designs@gmail.com">text me</a>
     </div>
 
     <!-- Testimonials -->
-    <section class="testimonials" aria-labelledby="testimonials-title">
-      <header class="section-head">
-        <h2 class="section-head__title" id="testimonials-title">Testimonials</h2>
-      </header>
-
-      <div class="testimonial-track">
-        <ul class="testimonial-list">
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-thomas.png" alt="Thomas Zervos" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Thomas Zervos</p>
-                <p class="testimonial-card__role">CEO at &ldquo;Vectorial&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/thomas-zervos/?locale=en" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Margo demonstrated solid and practice-oriented expertise in UX/UI design, which she successfully applied at all times. She consistently familiarised herself quickly and confidently with new topics, projects, and tools.&rdquo;</p>
-          </li>
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-anny.png" alt="Anny Xu" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Anny Xu</p>
-                <p class="testimonial-card__role">Product Owner at &ldquo;Vectorial&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/anny-xu/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Working with Margo has always been exceptionally smooth. She is reliable, collaborative and someone the team can count on to deliver thoughtful, well-crafted work. Her designs strike a unique balance between&hellip;&rdquo;</p>
-          </li>
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-tom.png" alt="Tom Janssens" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Tom Janssens</p>
-                <p class="testimonial-card__role">Creative Technologist and Experiential Designer</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/tmjns/?locale=en" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Working with Margo was a great experience. We worked together on a website rebranding where she took ownership of the direction and stands out not only for her UI design capabilities but also for her soft skills.&rdquo;</p>
-          </li>
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-keri.png" alt="Keri Byrne" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Keri Byrne</p>
-                <p class="testimonial-card__role">Product Marketer at &ldquo;Nmbrs&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/keribyrne/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;Margo helped build a website and logo design for my ceramic business. Margo was great to work with, she was very direct and communicative. She was also very adaptable and worked fast. She went above and beyond&hellip;&rdquo;</p>
-          </li>
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-victoria.png" alt="Victoria Przybylska" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Victoria Przybylska</p>
-                <p class="testimonial-card__role">Startup Mentor</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/victoria-przybylska-startups/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">&ldquo;I worked with Margo on a mental health startup platform, where she handled UX/UI design. Margo was full of empathy, passion, talent, and she has great communication skills that made collaboration smooth and very enjoyable.&rdquo;</p>
-          </li>
-          <li class="testimonial-card">
-            <div class="testimonial-card__head">
-              <div class="testimonial-card__avatar">
-                <img class="frame" src="assets/icons/sun-avatar.svg" alt="" />
-                <img class="photo" src="assets/home/testimonial-daniel.png" alt="Daniel Nürrenbach" />
-              </div>
-              <div>
-                <p class="testimonial-card__name">Daniel Nürrenbach</p>
-                <p class="testimonial-card__role">Founder of &ldquo;mpct.media&rdquo;</p>
-              </div>
-              <a class="testimonial-card__li" href="https://www.linkedin.com/in/daniel-n%C3%BCrrenbach-25487520b/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/linkedin-testimonial.svg" alt="" /></a>
-            </div>
-            <p class="testimonial-card__body">lorem ipsum</p>
-          </li>
-        </ul>
-      </div>
-
-      <div class="testimonial-nav" role="group" aria-label="Testimonial navigation">
-        <button class="prev" type="button" aria-label="Previous testimonial"><img src="assets/icons/carousel-arrow.svg" alt="" /></button>
-        <button class="next" type="button" aria-label="Next testimonial"><img src="assets/icons/carousel-arrow.svg" alt="" /></button>
-      </div>
-    </section>
+    <margo-testimonials></margo-testimonials>
 
   </main>
 
-  <footer class="site-footer">
-    <p class="site-footer__love">I create things with <span class="accent manic">LOVE</span></p>
-    <p class="site-footer__contact"><a class="btn" href="mailto:mrg3.designs@gmail.com">text me</a></p>
-    <div class="site-footer__meta">
-      <span>margowebsite.com</span>
-      <nav aria-label="Footer">
-        <a href="index.html#projects">Projects</a> &nbsp;&nbsp;
-        <a href="about.html">About</a> &nbsp;&nbsp;
-        <a href="#">CV</a> &nbsp;&nbsp;
-        <a href="mailto:mrg3.designs@gmail.com">Contact</a>
-      </nav>
-      <div class="sm">
-        <a href="mailto:mrg3.designs@gmail.com" aria-label="Email"><img src="assets/icons/social-mail.svg" alt="" /></a>
-        <a href="https://www.linkedin.com/in/margarita-liutova-ux-ui-designer/" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="assets/icons/social-linkedin.svg" alt="" /></a>
-        <a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="Instagram"><img src="assets/icons/social-instagram.svg" alt="" /></a>
-        <a href="https://medium.com/" target="_blank" rel="noopener" aria-label="Medium"><img src="assets/icons/social-medium.svg" alt="" /></a>
-      </div>
-    </div>
-    <div class="footer-hearts" aria-hidden="true"></div>
-  </footer>
+  <margo-footer></margo-footer>
 
+  <script src="assets/js/components.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>
