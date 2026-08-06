@@ -562,10 +562,6 @@ ul {
 	border: 2px solid var(--primary-blue);
 	overflow: hidden;
 	color: var(--primary-blue);
-	transition: transform 0.25s ease;
-}
-.project-card:hover {
-	transform: translateY(-6px);
 }
 .project-card__figure {
 	position: absolute;
@@ -583,13 +579,18 @@ ul {
 	left: 0;
 	right: 0;
 	padding: 16px;
-	font-family: var(--font-display);
-	font-weight: 400;
+	font-family: var(--font-body);
+	font-weight: 500;
 	font-size: 24px;
 	line-height: 33px;
 	color: var(--primary-blue);
 	text-transform: capitalize;
 	margin: 0;
+}
+.project-card__num {
+	font-family: var(--font-display);
+	font-weight: 400;
+	margin-right: 6px;
 }
 .project-card__tags {
 	position: absolute;
@@ -601,6 +602,36 @@ ul {
 	flex-direction: column;
 	align-items: flex-start;
 	gap: 8px;
+	transition: transform 0.3s ease;
+}
+.project-card:hover .project-card__tags {
+	transform: translateY(-74px);
+}
+/* "Read more" CTA slides up from below the card on hover. */
+.project-card__cta {
+	position: absolute;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	height: 74px;
+	padding: 16px;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-family: var(--font-body);
+	font-weight: 500;
+	font-size: var(--fs-nav);
+	line-height: 1.5;
+	color: var(--primary-blue);
+	transform: translateY(100%);
+	transition: transform 0.3s ease;
+}
+.project-card:hover .project-card__cta {
+	transform: translateY(0);
+}
+.project-card__cta img {
+	width: 42px;
+	height: 42px;
 }
 .project-card__tag-row {
 	display: flex;
