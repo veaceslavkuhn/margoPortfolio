@@ -401,15 +401,11 @@ ul {
 	border: 2px solid var(--primary-red);
 	border-radius: 4px;
 	background: transparent;
-	transition:
-		background 0.2s ease,
-		color 0.2s ease,
-		transform 0.2s ease;
 }
+/* Figma "Primary button" hover: no fill / no shift — only the arrow icon appears. */
 .btn:hover {
-	background: var(--primary-red);
-	color: var(--paper);
-	transform: translateY(-2px);
+	background: transparent;
+	color: var(--primary-red);
 }
 .btn--ghost {
 	border: 0;
@@ -431,11 +427,19 @@ ul {
 .btn--disabled:hover {
 	background: transparent;
 	color: #a6a6a6;
-	transform: none;
 }
-.btn__arrow {
-	width: 26px;
-	height: 26px;
+/* Arrow revealed on hover; blue source SVG recoloured to --primary-red via filter chain. */
+.btn:not(.btn--ghost):not(.btn--disabled)::after {
+	content: "";
+	display: none;
+	width: 42px;
+	height: 42px;
+	background: url("../icons/button-arrow.svg") center / contain no-repeat;
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
+}
+.btn:not(.btn--ghost):not(.btn--disabled):hover::after {
+	display: block;
 }
 
 /* Secondary button — Figma "Secondary button": 268×56, no border, 4px radius, Chiron 24/500 blue + 42×42 arrow. */
@@ -454,17 +458,18 @@ ul {
 	color: var(--primary-blue);
 	border-radius: 4px;
 	text-transform: none;
-	transition:
-		color 0.2s ease,
-		transform 0.2s ease;
 }
+/* Figma "Secondary button" hover: text + arrow shift to red, no lift. */
 .link-arrow:hover {
 	color: var(--primary-red);
-	transform: translateY(-2px);
 }
 .link-arrow img {
 	width: 42px;
 	height: 42px;
+}
+.link-arrow:hover img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 
 /* -----------------------------
