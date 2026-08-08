@@ -381,7 +381,7 @@ ul {
 /* -----------------------------
    9. Buttons
 ------------------------------ */
-/* Primary button — Figma "Primary button": 268×56, Chiron 24/500, 2px red border, 4px radius */
+/* Primary button — Figma "Primary button": 268×56, Chiron 24/500, hand-drawn red wavy border */
 .btn {
 	display: inline-flex;
 	justify-content: center;
@@ -395,34 +395,31 @@ ul {
 	font-weight: 500;
 	line-height: 1.5;
 	color: var(--primary-red);
-	border: 2px solid var(--primary-red);
-	border-radius: 4px;
-	background: transparent;
+	background:
+		url("../cardsSvg/primary_button.svg") center / 100% 100% no-repeat;
 }
 /* Figma "Primary button" hover: no fill / no shift — only the arrow icon appears. */
 .btn:hover {
-	background: transparent;
 	color: var(--primary-red);
 }
 .btn--ghost {
-	border: 0;
 	padding: 10px 0;
 	min-width: 0;
 	min-height: 0;
+	background: none;
 }
 .btn--ghost:hover {
-	background: transparent;
+	background: none;
 	color: var(--primary-red);
 }
-/* Figma "Primary button" disabled variant \u2014 grey border + text, no hover. */
+/* Figma "Primary button" disabled variant \u2014 greyscale the wavy border and text. */
 .btn--disabled {
-	border-color: #a6a6a6;
 	color: #a6a6a6;
+	filter: grayscale(1);
 	cursor: not-allowed;
 	pointer-events: none;
 }
 .btn--disabled:hover {
-	background: transparent;
 	color: #a6a6a6;
 }
 /* Arrow revealed on hover; blue source SVG recoloured to --primary-red via filter chain. */
