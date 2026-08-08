@@ -165,15 +165,6 @@
 			this.innerHTML = `
 <footer class="site-footer">
   <div class="site-footer__paper">
-    <svg class="site-footer__border" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <defs>
-        <filter id="footer-wobble" x="-2%" y="-2%" width="104%" height="104%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="7" result="noise"/>
-          <feDisplacementMap in="SourceGraphic" in2="noise" scale="8"/>
-        </filter>
-      </defs>
-      <rect x="0" y="0" width="100%" height="100%" fill="none" stroke-width="2" vector-effect="non-scaling-stroke" filter="url(#footer-wobble)"/>
-    </svg>
     <div class="site-footer__cta">
       <p class="site-footer__love">I create things with <span class="accent manic">LOVE</span></p>
       <p class="site-footer__contact"><a class="btn" href="mailto:mrg3.designs@gmail.com">text me</a></p>
