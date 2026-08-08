@@ -83,9 +83,6 @@ body {
 	line-height: 1.5;
 	color: var(--ink);
 	background-color: var(--paper);
-	background-image: url("../common/texture-footer.png");
-	background-repeat: repeat;
-	background-size: 800px auto;
 	min-height: 100vh;
 	overflow-x: hidden;
 }
@@ -1170,15 +1167,29 @@ ul {
 .site-footer__paper {
 	position: relative;
 	margin: 0 5.83%;
-	padding: 100px 20px 40px;
+	/* padding-bottom = 25px gap (Frame 40224) + 130.67px hearts overlap area */
+	padding: 100px 20px 156px;
 	background: url("../common/texture-footer.png") repeat;
 	background-size: 800px auto;
-	border: 2px solid var(--primary-blue);
 	box-shadow: 0 4px 7px rgba(214, 210, 211, 0.25);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 	gap: 64px;
+}
+/* Dynamic 2px blue stroke centred on the paper edge — Figma "Wavy" plugin:
+   Frequency 200% (baseFrequency ≈ 0.02), Wiggle 40% (displacement ≈ 8px),
+   Smoothen 30% (numOctaves 2). vector-effect keeps stroke width crisp. */
+.site-footer__border {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	pointer-events: none;
+}
+.site-footer__border rect {
+	stroke: var(--primary-blue);
 }
 .site-footer__cta {
 	display: flex;
@@ -1234,8 +1245,11 @@ ul {
 }
 
 .site-footer__hearts {
+	position: relative;
 	width: 100%;
 	height: 130.67px;
+	/* Overlap the bottom of the paper panel (Figma: Subtract sits inside the 488px paper) */
+	margin-top: -130.67px;
 	background: url("../common/footer-hearts.svg") no-repeat center / 100% 100%;
 }
 
@@ -1359,7 +1373,7 @@ ul {
 	}
 	.site-footer__paper {
 		margin: 0 var(--page-pad-x);
-		padding: 60px 20px 32px;
+		padding: 60px 20px 110px;
 		gap: 40px;
 	}
 	.site-footer__love {
@@ -1372,5 +1386,6 @@ ul {
 	}
 	.site-footer__hearts {
 		height: 90px;
+		margin-top: -90px;
 	}
 }
