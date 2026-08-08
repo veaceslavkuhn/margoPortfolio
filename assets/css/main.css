@@ -1004,6 +1004,13 @@ ul {
 	height: 100%;
 	object-fit: cover;
 }
+/* Fatten the wavy outline to ~2px by stacking 4 zero-blur drop-shadows around it */
+.case-hero-img__frame::after {
+	filter: drop-shadow(1px 0 0 var(--primary-blue))
+		drop-shadow(-1px 0 0 var(--primary-blue))
+		drop-shadow(0 1px 0 var(--primary-blue))
+		drop-shadow(0 -1px 0 var(--primary-blue));
+}
 
 /* Legacy `.case-hero` \u2014 dkp/evolution/kttw still put the meta+links row at the
    top of the page inside a `.case-hero` wrapper (before their preview image). */
