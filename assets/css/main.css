@@ -1230,9 +1230,9 @@ ul {
    full-width red hearts bar (130.67px) at the bottom.
 ------------------------------ */
 .site-footer {
-	margin-top: 40px;
 	position: relative;
-	/* solid paper hides body texture in the gutters around the wavy panel */
+	/* padding (not margin) so the white background covers the gap above the wavy panel */
+	padding-top: 40px;
 	background: var(--paper);
 }
 .site-footer__paper {
@@ -1241,7 +1241,6 @@ ul {
 	margin: 0 5.83%;
 	/* padding-bottom = 25px gap (Frame 40224) + 130.67px hearts overlap area */
 	padding: 100px 20px 156px;
-	box-shadow: 0 4px 7px rgba(214, 210, 211, 0.25);
 	display: flex;
 	flex-direction: column;
 	align-items: center;
