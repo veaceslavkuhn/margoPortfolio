@@ -831,6 +831,16 @@ ul {
    Figma "Hero section" 1377\u00d7594.5 \u2014 central portrait 218\u00d7300 surrounded by
    six rotated decorative items at exact Figma coordinates.
 ------------------------------ */
+/* About page: texture only on nav, sm-strip, hero (.about-hero), and footer */
+body.page-about {
+	background: var(--paper);
+}
+body.page-about .sm-strip,
+body.page-about .about-hero {
+	background: var(--paper) var(--paper-texture) repeat-y;
+	background-size: var(--paper-texture-size);
+}
+
 .about-hero {
 	position: relative;
 	padding: 40px 0 100px;
