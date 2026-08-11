@@ -857,57 +857,111 @@ body.page-about .about-hero {
 .collage__item {
 	position: absolute;
 }
-.collage__item img {
+.collage__img {
+	position: absolute;
+	inset: 0;
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+	transition: opacity 0.25s ease;
 }
+.collage__img--hover,
+.collage__img--blink {
+	opacity: 0;
+}
+.collage__item:hover .collage__img--default {
+	opacity: 0;
+}
+.collage__item:hover .collage__img--hover {
+	opacity: 1;
+}
+
+/* Central portrait: no hover; brief eye-blink loop */
 .collage__item--portrait {
 	width: 218px;
 	height: 300px;
 	left: calc(50% - 109px);
 	top: 114px;
 }
+.collage__item--portrait .collage__img--default {
+	animation: portraitOpen 5s steps(1, end) infinite;
+}
+.collage__item--portrait .collage__img--blink {
+	animation: portraitBlink 5s steps(1, end) infinite;
+}
+@keyframes portraitOpen {
+	0%,
+	94% {
+		opacity: 1;
+	}
+	95%,
+	97% {
+		opacity: 0;
+	}
+	98%,
+	100% {
+		opacity: 1;
+	}
+}
+@keyframes portraitBlink {
+	0%,
+	94% {
+		opacity: 0;
+	}
+	95%,
+	97% {
+		opacity: 1;
+	}
+	98%,
+	100% {
+		opacity: 0;
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.collage__item--portrait .collage__img--default,
+	.collage__item--portrait .collage__img--blink {
+		animation: none;
+	}
+	.collage__item--portrait .collage__img--blink {
+		opacity: 0;
+	}
+}
+
 .collage__item--tarot {
-	width: 117px;
-	height: 200px;
-	left: 329px;
-	top: 9px;
-	transform: rotate(-5deg);
-	border-radius: 5px;
-	overflow: hidden;
+	width: 287px;
+	height: 278px;
+	left: 254px;
+	top: 0;
 }
 .collage__item--shell {
-	width: 159px;
-	height: 100px;
-	left: 910px;
-	top: 6px;
-	transform: rotate(32.38deg);
+	width: 255px;
+	height: 164px;
+	left: 877px;
+	top: 37px;
 }
 .collage__item--stone {
-	width: 136px;
-	height: 150px;
-	left: 53px;
-	top: 212px;
+	width: 234px;
+	height: 219px;
+	left: 0;
+	top: 203px;
 }
 .collage__item--flower {
-	width: 160px;
-	height: 150px;
-	left: 1165px;
-	top: 212px;
+	width: 263px;
+	height: 219px;
+	left: 1114px;
+	top: 203px;
 }
 .collage__item--buddha {
-	width: 154px;
-	height: 200px;
-	left: 306px;
-	top: 356px;
+	width: 380px;
+	height: 279px;
+	left: 188px;
+	top: 316px;
 }
 .collage__item--passport {
-	width: 144px;
-	height: 200px;
-	left: 914px;
-	top: 347px;
-	transform: rotate(5.79deg);
+	width: 283px;
+	height: 248px;
+	left: 864px;
+	top: 345px;
 }
 
 /* Bio blocks \u2014 Figma "Frame 40214" 1280\u00d71498.9 with two rows:
