@@ -742,7 +742,7 @@ ul {
 	align-items: center;
 	gap: 16px;
 	/* room on the right so the absolutely-positioned LinkedIn icon doesn't overlap the name */
-	padding-right: 40px;
+	padding-right: 30px;
 }
 .testimonial-card__avatar {
 	position: relative;
@@ -776,7 +776,7 @@ ul {
 	font-family: var(--font-body);
 	font-weight: 300;
 	font-size: var(--fs-body);
-	line-height: 1.2;
+	line-height: 1.5;
 	color: var(--primary-blue);
 }
 .testimonial-card__li {
@@ -785,13 +785,16 @@ ul {
 	right: 24px;
 	width: 24px;
 	height: 24px;
+	/* Figma Union inset — glyph fills ~82% × 85% of the 24×24 slot */
+	padding: 2px;
+	box-sizing: border-box;
 	display: grid;
 	place-items: center;
 	z-index: 2;
 }
 .testimonial-card__li img {
-	width: 24px;
-	height: 24px;
+	width: 100%;
+	height: 100%;
 	transition: filter 0.2s ease;
 }
 /* Common red-icon hover (matches .sm-strip__item, .btn, .link-arrow) */
