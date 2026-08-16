@@ -738,10 +738,11 @@ ul {
 	}
 }
 .testimonial-card__head {
-	position: relative;
 	display: flex;
 	align-items: center;
 	gap: 16px;
+	/* room on the right so the absolutely-positioned LinkedIn icon doesn't overlap the name */
+	padding-right: 40px;
 }
 .testimonial-card__avatar {
 	position: relative;
@@ -779,15 +780,25 @@ ul {
 	color: var(--primary-blue);
 }
 .testimonial-card__li {
-	flex-shrink: 0;
-	width: 30px;
-	height: 30px;
+	position: absolute;
+	top: 24px;
+	right: 24px;
+	width: 24px;
+	height: 24px;
 	display: grid;
 	place-items: center;
+	z-index: 2;
 }
 .testimonial-card__li img {
-	width: 30px;
-	height: 30px;
+	width: 24px;
+	height: 24px;
+	transition: filter 0.2s ease;
+}
+/* Common red-icon hover (matches .sm-strip__item, .btn, .link-arrow) */
+.testimonial-card__li:hover img,
+.testimonial-card__li:focus-visible img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 .testimonial-card__body {
 	font-family: var(--font-body);
@@ -831,6 +842,11 @@ ul {
 	flex-shrink: 0;
 	width: 28px;
 	height: 28px;
+	/* Bolder line weight so the hand-drawn arrow reads clearly at 28px */
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linejoin: round;
+	stroke-linecap: round;
 	/* Right by default (external-link anchors) */
 	transform: none;
 	transition: transform 0.2s ease;
@@ -867,6 +883,13 @@ button.testimonial-card__cta .testimonial-card__cta-arrow {
 .testimonial-nav button img {
 	width: 40px;
 	height: 33px;
+	transition: filter 0.2s ease;
+}
+/* Common red-icon hover — matches site pattern */
+.testimonial-nav button:hover img,
+.testimonial-nav button:focus-visible img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 .testimonial-nav .next img {
 	transform: scaleX(-1);
