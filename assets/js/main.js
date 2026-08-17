@@ -211,4 +211,90 @@
 			animateExpand(card, !card.classList.contains("is-expanded"));
 		});
 	});
+
+	/* ------------------------------
+	 * 4. DKP project — password gate (index page)
+	 *    Correct password (2203) sets localStorage flag and redirects to detail.
+	 * ---------------------------- */
+	const dkpCard = document.querySelector(".project-card--dkp");
+	if (dkpCard) {
+		const DKP_URL = "projects/dkp.html";
+		const isUnlocked = () => localStorage.getItem("dkp-unlocked") === "true";
+
+		const applyState = () => {
+			const unlocked = isUnlocked();
+			dkpCard.dataset.state = unlocked ? "unlocked" : "locked";
+			if (unlocked) {
+				dkpCard.setAttribute("role", "link");
+				dkpCard.setAttribute("tabindex", "0");
+			} else {
+				dkpCard.removeAttribute("role");
+				dkpCard.removeAttribute("tabindex");
+			}
+		};
+		applyState();
+
+		const navigate = () => {
+			window.location.href = DKP_URL;
+		};
+
+		dkpCard.addEventListener("click", (e) => {
+			if (dkpCard.dataset.state !== "unlocked") return;
+			if (e.target.closest(".project-card__lock")) return;
+			navigate();
+		});
+		dkpCard.addEventListener("keydown", (e) => {
+			if (dkpCard.dataset.state !== "unlocked") return;
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				navigate();
+			}
+		});
+
+		const lockedCta = dkpCard.querySelector(".project-card__cta--locked");
+		const form = dkpCard.querySelector(".project-card__lock");
+		const input = form?.querySelector(".project-card__lock-input");
+
+		const openForm = () => {
+			if (dkpCard.dataset.state !== "locked") return;
+			dkpCard.dataset.formOpen = "true";
+			requestAnimationFrame(() => input?.focus());
+		};
+		const closeForm = () => {
+			dkpCard.dataset.formOpen = "false";
+			if (input) input.value = "";
+			if (form) form.dataset.error = "false";
+		};
+
+		lockedCta?.addEventListener("click", (e) => {
+			// stop bubbling so the document click-outside handler doesn't immediately reclose
+			e.stopPropagation();
+			openForm();
+		});
+
+		form?.addEventListener("submit", (e) => {
+			e.preventDefault();
+			if (input.value === "2203") {
+				localStorage.setItem("dkp-unlocked", "true");
+				navigate();
+			} else {
+				form.dataset.error = "true";
+			}
+		});
+		input?.addEventListener("input", () => {
+			if (form.dataset.error === "true") form.dataset.error = "false";
+		});
+
+		document.addEventListener("keydown", (e) => {
+			if (e.key === "Escape" && dkpCard.dataset.formOpen === "true") {
+				closeForm();
+			}
+		});
+		document.addEventListener("click", (e) => {
+			if (dkpCard.dataset.formOpen !== "true") return;
+			if (form?.contains(e.target)) return;
+			if (lockedCta?.contains(e.target)) return;
+			closeForm();
+		});
+	}
 })();

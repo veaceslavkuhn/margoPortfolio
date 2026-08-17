@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dynamische kundenprofile — Margo Liutova</title>
   <meta name="description" content="Case study: Dynamische Kundenprofile for R+V — a customer-profile visualisation and comparison tool for a large German insurer." />
+  <script>
+    // Password gate — redirect to home if DKP hasn't been unlocked
+    (function () {
+      try {
+        if (localStorage.getItem("dkp-unlocked") !== "true") {
+          window.location.replace("../index.html#projects");
+        }
+      } catch (_) {
+        window.location.replace("../index.html#projects");
+      }
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />

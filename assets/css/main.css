@@ -688,6 +688,132 @@ ul {
 }
 
 /* -----------------------------
+   Project card — DKP password gate
+   Three visual states driven by data-state + data-form-open:
+   - locked + form-open=false: normal card look; "password required" CTA slides
+     up on hover (matches other cards). Form and image-wash hidden.
+   - locked + form-open=true:  title, tags, CTAs all hidden. Grey wash appears
+     over the image and the 250×56 password field is centered. Escape / outside
+     click closes the form.
+   - unlocked: same as any other project card link — click / Enter navigates.
+------------------------------ */
+.project-card--dkp {
+	/* Reset native button defaults on the locked CTA */
+}
+.project-card--dkp[data-state="unlocked"] {
+	cursor: pointer;
+}
+/* Hide the "read more" CTA while locked, hide "password required" while unlocked */
+.project-card--dkp[data-state="locked"] .project-card__cta--unlocked,
+.project-card--dkp[data-state="unlocked"] .project-card__cta--locked {
+	display: none;
+}
+/* Hide password form + overlay unless the form is explicitly open */
+.project-card--dkp[data-form-open="false"] .project-card__lock,
+.project-card--dkp[data-state="unlocked"] .project-card__lock {
+	display: none;
+}
+/* Form-open: hide title, tags and the hover CTA; show grey wash */
+.project-card--dkp[data-form-open="true"] .project-card__title,
+.project-card--dkp[data-form-open="true"] .project-card__tags,
+.project-card--dkp[data-form-open="true"] .project-card__cta {
+	display: none;
+}
+.project-card__overlay {
+	position: absolute;
+	inset: 0;
+	background: rgba(196, 196, 196, 0.2);
+	pointer-events: none;
+	display: none;
+}
+.project-card--dkp[data-form-open="true"] .project-card__overlay {
+	display: block;
+}
+
+/* "password required" CTA — inherits .project-card__cta positioning + hover
+   slide-up; strip the button element's native chrome. */
+.project-card__cta--locked {
+	background: transparent;
+	border: 0;
+	cursor: pointer;
+	text-align: left;
+	font: inherit;
+}
+
+.project-card__lock {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	width: 250px;
+	max-width: calc(100% - 40px);
+	height: 56px;
+	padding: 16px;
+	background: var(--paper);
+	border: 2px solid var(--primary-blue);
+	border-radius: 4px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	gap: 10px;
+	box-sizing: border-box;
+	/* stacked above the wavy-border ::after overlay (z-index 2) */
+	z-index: 3;
+}
+.project-card__lock-input {
+	flex: 1;
+	min-width: 0;
+	border: 0;
+	background: transparent;
+	outline: 0;
+	padding: 0;
+	font-family: var(--font-body);
+	font-weight: 500;
+	font-size: var(--fs-body);
+	line-height: 1.5;
+	color: var(--primary-blue);
+	letter-spacing: 0.15em;
+}
+.project-card__lock-input::placeholder {
+	color: #969696;
+	letter-spacing: 0;
+}
+.project-card__lock-submit {
+	flex-shrink: 0;
+	width: 28px;
+	height: 23px;
+	padding: 0;
+	border: 0;
+	background: transparent;
+	cursor: pointer;
+	display: grid;
+	place-items: center;
+}
+.project-card__lock-submit img {
+	width: 28px;
+	height: 23px;
+	object-fit: contain;
+	transition: filter 0.2s ease;
+}
+.project-card__lock-submit:hover img,
+.project-card__lock-submit:focus-visible img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
+}
+/* Error state — wrong password */
+.project-card__lock[data-error="true"] .project-card__lock-input {
+	color: var(--primary-red);
+}
+.project-card__lock[data-error="true"] .project-card__lock-input::placeholder {
+	color: var(--primary-red);
+}
+.project-card__lock[data-error="true"] .project-card__lock-submit img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
+}
+
+/* -----------------------------
    12. Testimonials
    Figma "Feedback" card 411\u00d7327 \u2014 white bg, 2px blue border, 24px padding,
    yellow-square avatar with photo overlay, Chiron 24 bold blue name, Chiron 16/300 role,

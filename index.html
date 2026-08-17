@@ -91,15 +91,25 @@
           <span class="project-card__cta">read more <img src="assets/icons/button-arrow.svg" alt="" /></span>
         </a>
 
-        <a class="project-card" href="projects/dkp.html">
-          <div class="project-card__figure"><img src="assets/home/project-dkp.png" alt="DKP preview" /></div>
+        <div class="project-card project-card--dkp" data-state="locked" data-form-open="false">
+          <div class="project-card__figure">
+            <img src="assets/home/project-dkp.png" alt="DKP preview" />
+            <span class="project-card__overlay" aria-hidden="true"></span>
+          </div>
           <h3 class="project-card__title"><span class="project-card__num">(2)</span> DKP</h3>
           <div class="project-card__tags">
             <span class="project-card__tag">UI/UX Design</span>
             <span class="project-card__tag">Desktop / Mobile</span>
           </div>
-          <span class="project-card__cta">read more <img src="assets/icons/button-arrow.svg" alt="" /></span>
-        </a>
+          <button type="button" class="project-card__cta project-card__cta--locked">password required <img src="assets/icons/button-arrow.svg" alt="" /></button>
+          <span class="project-card__cta project-card__cta--unlocked">read more <img src="assets/icons/button-arrow.svg" alt="" /></span>
+          <form class="project-card__lock" data-error="false" novalidate>
+            <input class="project-card__lock-input" type="password" placeholder="password required" aria-label="Enter password to unlock DKP" autocomplete="off" maxlength="16" />
+            <button class="project-card__lock-submit" type="submit" aria-label="Submit password">
+              <img src="assets/icons/button-arrow.svg" alt="" />
+            </button>
+          </form>
+        </div>
 
         <a class="project-card" href="projects/evolution.html">
           <div class="project-card__figure"><img src="assets/home/project-evolution.png" alt="Evolution preview" /></div>
