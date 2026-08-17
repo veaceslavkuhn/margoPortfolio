@@ -623,6 +623,10 @@ ul {
 	text-transform: capitalize;
 	margin: 0;
 }
+/* Portfolio card uses 24px title padding per Figma. */
+.project-card--portfolio .project-card__title {
+	padding: 24px;
+}
 .project-card__num {
 	font-family: var(--font-display);
 	font-weight: 400;
@@ -701,19 +705,7 @@ ul {
 	display: inline-block;
 	width: 16px;
 	height: 16px;
-	background: var(--primary-red);
-	clip-path: polygon(
-		50% 0%,
-		61% 35%,
-		98% 35%,
-		68% 57%,
-		79% 91%,
-		50% 70%,
-		21% 91%,
-		32% 57%,
-		2% 35%,
-		39% 35%
-	);
+	background: url("../icons/dot.svg") center / contain no-repeat;
 	flex-shrink: 0;
 }
 
@@ -749,15 +741,12 @@ ul {
 .project-card--dkp[data-form-open="true"] .project-card__cta {
 	display: none;
 }
+/* DKP overlay is always visible on the DKP card per Figma (only DKP card has this element in markup). */
 .project-card__overlay {
 	position: absolute;
 	inset: 0;
 	background: rgba(196, 196, 196, 0.2);
 	pointer-events: none;
-	display: none;
-}
-.project-card--dkp[data-form-open="true"] .project-card__overlay {
-	display: block;
 }
 
 /* "password required" CTA — inherits .project-card__cta positioning + hover
@@ -767,7 +756,6 @@ ul {
 	border: 0;
 	cursor: pointer;
 	text-align: left;
-	font: inherit;
 }
 
 .project-card__lock {
@@ -808,6 +796,16 @@ ul {
 .project-card__lock-input::placeholder {
 	color: #969696;
 	letter-spacing: 0;
+}
+/* Figma: as soon as the field has content, text + submit arrow turn red. */
+.project-card__lock-input:not(:placeholder-shown) {
+	color: var(--primary-red);
+}
+.project-card__lock:has(.project-card__lock-input:not(:placeholder-shown))
+	.project-card__lock-submit
+	img {
+	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
+		hue-rotate(340deg) brightness(96%) contrast(90%);
 }
 .project-card__lock-submit {
 	flex-shrink: 0;
