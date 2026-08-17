@@ -34,12 +34,29 @@
 
 		const toggle = nav.querySelector(".nav-toggle");
 		if (toggle) {
-			toggle.addEventListener("click", () => {
-				const open = nav.classList.toggle("is-open");
+			const setOpen = (open) => {
+				nav.classList.toggle("is-open", open);
+				document.body.classList.toggle("nav-open", open);
 				toggle.setAttribute("aria-expanded", String(open));
+			};
+			toggle.addEventListener("click", () => {
+				setOpen(!nav.classList.contains("is-open"));
 			});
 			nav.querySelectorAll(".nav-link").forEach((link) => {
-				link.addEventListener("click", () => nav.classList.remove("is-open"));
+				link.addEventListener("click", () => setOpen(false));
+			});
+			// Close drawer if viewport grows past the mobile breakpoint
+			const mq = matchMedia("(max-width: 860px)");
+			const onMq = (e) => {
+				if (!e.matches) setOpen(false);
+			};
+			mq.addEventListener
+				? mq.addEventListener("change", onMq)
+				: mq.addListener(onMq);
+			// Close on Escape
+			document.addEventListener("keydown", (e) => {
+				if (e.key === "Escape" && nav.classList.contains("is-open"))
+					setOpen(false);
 			});
 		}
 	}

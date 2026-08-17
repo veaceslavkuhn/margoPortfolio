@@ -34,7 +34,9 @@
 
 	/* nav */
 	--nav-h: 170px;
-	--nav-h-scrolled: 73px;
+	--nav-h-scrolled: 96px;
+	--nav-logo: 170px;
+	--nav-logo-scrolled: 120px;
 
 	/* container */
 	--page-max: 1440px;
@@ -239,6 +241,10 @@ ul {
 	align-items: center;
 	justify-content: center;
 	gap: 14px;
+	transition: align-items 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.site-nav.is-scrolled .site-nav__inner {
+	align-items: flex-start;
 }
 
 .nav-group {
@@ -266,6 +272,7 @@ ul {
 	color: var(--primary-blue);
 	text-transform: uppercase;
 	line-height: 1.5;
+	white-space: nowrap;
 	transition:
 		color 0.2s ease,
 		transform 0.2s ease;
@@ -275,20 +282,25 @@ ul {
 	color: var(--primary-red);
 	transform: translateY(-2px);
 }
+.nav-link[aria-disabled="true"] {
+	pointer-events: none;
+	opacity: 0.5;
+	cursor: default;
+}
 
 .nav-logo {
 	position: relative;
 	z-index: 2;
-	width: 170px;
-	height: 170px;
+	width: var(--nav-logo);
+	height: var(--nav-logo);
 	flex: 0 0 auto;
 	transition:
 		width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
 		height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .site-nav.is-scrolled .nav-logo {
-	width: 120px;
-	height: 120px;
+	width: var(--nav-logo-scrolled);
+	height: var(--nav-logo-scrolled);
 	align-self: flex-start;
 }
 .nav-logo img {
@@ -299,6 +311,24 @@ ul {
 
 .nav-toggle {
 	display: none;
+}
+.nav-toggle__icon {
+	width: 24px;
+	height: 24px;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	fill: none;
+	display: block;
+}
+.nav-toggle__icon--close {
+	display: none;
+}
+.site-nav.is-open .nav-toggle__icon--open {
+	display: none;
+}
+.site-nav.is-open .nav-toggle__icon--close {
+	display: block;
 }
 
 /* -----------------------------
@@ -1594,6 +1624,22 @@ body.page-about .about-hero {
 @media (max-width: 1180px) {
 	:root {
 		--page-pad-x: 40px;
+		--nav-h: 140px;
+		--nav-h-scrolled: 88px;
+		--nav-logo: 140px;
+		--nav-logo-scrolled: 100px;
+	}
+	.site-nav__inner {
+		padding-inline: 20px;
+		gap: 12px;
+	}
+	.nav-group {
+		width: auto;
+		gap: 12px;
+	}
+	.nav-link {
+		width: 120px;
+		font-size: 20px;
 	}
 	.facts__grid {
 		grid-template-columns: repeat(2, 1fr);
@@ -1619,18 +1665,42 @@ body.page-about .about-hero {
 @media (max-width: 860px) {
 	:root {
 		--page-pad-x: 20px;
-		--nav-h: 120px;
+		--nav-h: 96px;
 		--nav-h-scrolled: 64px;
+		--nav-logo: clamp(72px, 22vw, 96px);
+		--nav-logo-scrolled: clamp(56px, 16vw, 72px);
 	}
-	.nav-logo {
-		width: 120px;
-		height: 120px;
+	.site-nav__inner {
+		justify-content: space-between;
+		padding-inline: 12px;
+		gap: 8px;
+	}
+	/* Right-side spacer keeps the logo optically centered when groups are collapsed */
+	.site-nav__inner::after {
+		content: "";
+		flex: 0 0 44px;
+		height: 44px;
+	}
+	.site-nav.is-scrolled .site-nav__inner {
+		align-items: center;
 	}
 	.site-nav.is-scrolled .nav-logo {
-		width: 64px;
-		height: 64px;
+		align-self: center;
+	}
+	.nav-toggle {
+		display: grid;
+		place-items: center;
+		width: 44px;
+		height: 44px;
+		border: 2px solid var(--primary-red);
+		background: transparent;
+		color: var(--primary-red);
+		padding: 0;
+		cursor: pointer;
+		flex: 0 0 auto;
 	}
 	.nav-group {
+		display: none;
 		width: auto;
 		height: auto;
 	}
@@ -1639,47 +1709,60 @@ body.page-about .about-hero {
 	}
 	.nav-link {
 		width: auto;
-		min-width: 80px;
+		min-width: 0;
 		height: auto;
 		font-size: 16px;
 		padding: 6px;
+		white-space: normal;
 	}
-	.nav-toggle {
-		display: grid;
-		place-items: center;
-		position: absolute;
-		left: 16px;
-		top: 20px;
-		width: 44px;
-		height: 44px;
-		border: 2px solid var(--primary-red);
-		color: var(--primary-red);
-		font-family: var(--font-display);
-		font-size: 20px;
+	.nav-link:hover,
+	.nav-link[aria-current="page"] {
+		transform: none;
 	}
-	.site-nav__inner {
-		position: relative;
-		padding-inline: 12px;
+
+	/* Open drawer: nav expands, groups wrap below on their own rows */
+	.site-nav.is-open {
+		height: auto;
 	}
-	.nav-group {
-		display: none;
+	.site-nav.is-open .site-nav__inner {
+		height: auto;
+		flex-wrap: wrap;
+		align-items: center;
+		padding-bottom: 20px;
 	}
 	.site-nav.is-open .nav-group {
 		display: flex;
 		flex-direction: column;
-		gap: 8px;
-		position: absolute;
-		top: 100%;
-		left: 0;
-		right: 0;
-		background: var(--paper);
-		padding: 24px;
-		z-index: 30;
-		box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+		flex-basis: 100%;
+		align-items: stretch;
+		gap: 4px;
+		padding: 8px 4px 0;
+		order: 3;
 	}
 	.site-nav.is-open .nav-group .nav-link {
-		min-width: 0;
+		width: 100%;
+		min-height: 44px;
+		padding: 10px 12px;
 		font-size: 22px;
+	}
+	body.nav-open {
+		overflow: hidden;
+	}
+	body.nav-open::before {
+		content: "";
+		position: fixed;
+		inset: 0;
+		background: rgba(0, 30, 60, 0.35);
+		z-index: 35;
+		animation: navBackdropIn 0.2s ease both;
+	}
+	@keyframes navBackdropIn {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	.hero__title {

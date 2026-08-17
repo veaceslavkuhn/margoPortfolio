@@ -103,7 +103,10 @@
 			this.innerHTML = `
 <header class="site-nav" role="banner">
   <div class="site-nav__inner">
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Toggle menu">&#9776;</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu nav-menu-2" aria-label="Toggle menu">
+      <svg class="nav-toggle__icon nav-toggle__icon--open" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></svg>
+      <svg class="nav-toggle__icon nav-toggle__icon--close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
+    </button>
     <div class="nav-group" id="nav-menu">
       <a class="nav-link" href="${BASE}index.html#projects"${attr("projects")}>projects</a>
       <a class="nav-link" href="${BASE}about.html"${attr("about")}>about</a>
@@ -111,8 +114,8 @@
     <a class="nav-logo" href="${BASE}index.html" aria-label="Margo home">
       <img src="${BASE}assets/common/logo.svg" alt="Margo logo" />
     </a>
-    <div class="nav-group">
-      <a class="nav-link" href="#" aria-disabled="true">cv</a>
+    <div class="nav-group" id="nav-menu-2">
+      <a class="nav-link" href="https://drive.google.com/drive/u/2/my-drive" target="_blank" rel="noopener">cv</a>
       <a class="nav-link" href="mailto:mrg3.designs@gmail.com">contact</a>
     </div>
   </div>
