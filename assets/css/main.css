@@ -446,15 +446,15 @@ ul {
 	background: none;
 	color: var(--primary-red);
 }
-/* Figma "Primary button" disabled variant \u2014 greyscale the wavy border and text. */
+/* Disabled variant — faded brand blue to stay on-palette. */
 .btn--disabled {
-	color: #a6a6a6;
-	filter: grayscale(1);
+	color: var(--primary-blue);
+	opacity: 0.4;
 	cursor: not-allowed;
 	pointer-events: none;
 }
 .btn--disabled:hover {
-	color: #a6a6a6;
+	color: var(--primary-blue);
 }
 /* Arrow revealed on hover; blue source SVG recoloured to --primary-red via filter chain. */
 .btn:not(.btn--ghost):not(.btn--disabled)::after {
@@ -1752,7 +1752,7 @@ body.page-about .about-hero {
 		content: "";
 		position: fixed;
 		inset: 0;
-		background: rgba(0, 30, 60, 0.35);
+		background: rgba(0, 78, 168, 0.45);
 		z-index: 35;
 		animation: navBackdropIn 0.2s ease both;
 	}
