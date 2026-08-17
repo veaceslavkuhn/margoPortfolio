@@ -502,34 +502,40 @@ ul {
 
 /* -----------------------------
    10. Fact cards row (3-card grid)
-   Figma "Three facts" 1280\u00d7232 \u2014 three 411\u00d7232 cards, 5px yellow border,
-   24px padding, 8px gap, MANIC/24 blue title, Chiron/16 red body.
+   Figma "Three facts" 1280×232 — three 411×232 cards, 5px yellow border,
+   24px padding, 8px inner gap, MANIC/24 blue title, Chiron/16 red body.
+   Auto-fit grid: 3 cols ≥~1080, 2 cols ~700-1080, 1 col <~700 (no hard cliffs).
 ------------------------------ */
 .facts {
 	padding: 60px var(--page-pad-x) 40px;
 }
 .facts__grid {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+	gap: clamp(16px, 2vw, 24px);
+	max-width: 1280px;
+	margin-inline: auto;
+	justify-content: center;
+	justify-items: center;
 }
 .fact-card {
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
 	align-items: flex-start;
-	gap: 16px;
+	gap: 8px;
 	padding: 24px;
-	min-height: 232px;
+	width: 100%;
+	max-width: 411px;
 	color: var(--primary-blue);
 }
 .fact-card__title {
 	font-family: var(--font-display);
 	font-weight: 400;
-	font-size: 32px;
-	line-height: 44px;
+	font-size: 24px;
+	line-height: 33px;
 	color: var(--primary-blue);
 	text-transform: capitalize;
+	align-self: stretch;
 }
 .fact-card__body {
 	font-family: var(--font-body);
@@ -537,10 +543,28 @@ ul {
 	font-size: var(--fs-body);
 	line-height: 1.5;
 	color: var(--primary-blue);
+	align-self: stretch;
 }
 .fact-card__body strong {
 	font-weight: 700;
 	color: var(--primary-red);
+}
+
+/* Standalone "About me" variant — Figma single 411×232 card, MANIC 32 title,
+   blue body, 16px gap. Available as a modifier; no markup added here. */
+.fact-card--about {
+	justify-content: center;
+	gap: 16px;
+}
+.fact-card--about .fact-card__title {
+	font-size: 32px;
+	line-height: 44px;
+}
+.fact-card--about .fact-card__body {
+	color: var(--primary-blue);
+}
+.fact-card--about .fact-card__body strong {
+	color: var(--primary-blue);
 }
 
 /* -----------------------------
@@ -1639,9 +1663,6 @@ body.page-about .about-hero {
 		width: 120px;
 		font-size: 20px;
 	}
-	.facts__grid {
-		grid-template-columns: repeat(2, 1fr);
-	}
 	.project-grid {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -1765,9 +1786,6 @@ body.page-about .about-hero {
 
 	.hero__title {
 		font-size: clamp(40px, 12vw, 72px);
-	}
-	.facts__grid {
-		grid-template-columns: 1fr;
 	}
 	.project-grid {
 		grid-template-columns: 1fr;
