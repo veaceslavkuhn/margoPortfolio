@@ -708,12 +708,13 @@ ul {
 /* -----------------------------
    Project card — DKP password gate
    Three visual states driven by data-state + data-form-open:
-   - locked + form-open=false: normal card look; "password required" CTA slides
-     up on hover (matches other cards). Form and image-wash hidden.
-   - locked + form-open=true:  title, tags, CTAs all hidden. Grey wash appears
-     over the image and the 250×56 password field is centered. Escape / outside
-     click closes the form.
-   - unlocked: same as any other project card link — click / Enter navigates.
+   - locked + form-open=false: image is blurred + grey wash; "password required"
+     CTA slides up on hover (matches other cards). Form hidden.
+   - locked + form-open=true:  title, tags, CTAs all hidden. Blur + grey wash
+     stay over the image; the 250×56 password field is centered. Escape /
+     outside click closes the form.
+   - unlocked: same as any other project card link — image is clear, wash is
+     hidden, click / Enter navigates.
 ------------------------------ */
 .project-card--dkp {
 	/* Reset native button defaults on the locked CTA */
@@ -737,12 +738,21 @@ ul {
 .project-card--dkp[data-form-open="true"] .project-card__cta {
 	display: none;
 }
-/* DKP overlay is always visible on the DKP card per Figma (only DKP card has this element in markup). */
+/* Locked preview: blur the image so the protected content isn't legible.
+   Slight scale hides the soft fade at the blur edges within the wavy mask. */
+.project-card--dkp[data-state="locked"] .project-card__figure img {
+	filter: blur(10px);
+	transform: scale(1.08);
+}
+/* Grey wash reinforces the "locked" state; both wash and blur clear once unlocked. */
 .project-card__overlay {
 	position: absolute;
 	inset: 0;
 	background: rgba(196, 196, 196, 0.2);
 	pointer-events: none;
+}
+.project-card--dkp[data-state="unlocked"] .project-card__overlay {
+	display: none;
 }
 
 /* "password required" CTA — inherits .project-card__cta positioning + hover
