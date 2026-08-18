@@ -195,13 +195,13 @@
   <div class="site-footer__paper">
     <div class="site-footer__cta">
       <p class="site-footer__love">I create things with <span class="accent manic">LOVE</span></p>
-      <p class="site-footer__contact"><a class="btn" href="mailto:mrg3.designs@gmail.com">text me</a></p>
+      <p class="site-footer__contact"><a class="btn btn--text-me" href="mailto:mrg3.designs@gmail.com">text me</a></p>
     </div>
     <nav class="site-footer__meta" aria-label="Footer">
-      <span class="site-footer__brand">margowebsite.com</span>
+      <a class="site-footer__brand" href="https://www.mrg22.com/">mrg22.com</a>
       <a href="${BASE}index.html#projects">Projects</a>
       <a href="${BASE}about.html">About</a>
-      <a href="#">CV</a>
+      <a href="https://drive.google.com/drive/u/2/my-drive" target="_blank" rel="noopener">CV</a>
       <a href="mailto:mrg3.designs@gmail.com">Contact</a>
     </nav>
   </div>
