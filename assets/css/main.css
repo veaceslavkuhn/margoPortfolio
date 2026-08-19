@@ -417,7 +417,8 @@ ul {
    Rendered directly from Figma PNG exports in assets/buttons/. The visible
    label is baked into the artwork; the HTML text stays in the DOM so screen
    readers and search engines still read it (hidden via text-indent).
-   Primary variants: 272×60 native. Secondary (link-arrow): 268×56 native.
+   Displayed at 272×60 (primary) and 268×56 (link-arrow); PNGs ship at ~2×
+   for retina.
 ------------------------------ */
 .btn,
 .link-arrow {
@@ -462,6 +463,10 @@ ul {
 }
 .btn--full-case-study {
 	background-image: url("../buttons/full-case-study-default.png");
+}
+.btn--full-case-study:hover,
+.btn--full-case-study:focus-visible {
+	background-image: url("../buttons/full-case-study-hover.png");
 }
 /* Disabled — used with .btn--full-case-study for unpublished case studies. */
 .btn--disabled {
