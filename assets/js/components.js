@@ -77,19 +77,19 @@
 			external: false,
 		},
 		{
-			href: "https://www.linkedin.com/in/margarita-liutova-ux-ui-designer/",
+			href: "https://www.linkedin.com/in/margo-liutova/",
 			label: "LinkedIn",
 			icon: "assets/icons/social-linkedin.svg",
 			external: true,
 		},
 		{
-			href: "https://www.instagram.com/",
+			href: "https://www.instagram.com/designs.mrg/",
 			label: "Instagram",
 			icon: "assets/icons/social-instagram.svg",
 			external: true,
 		},
 		{
-			href: "https://medium.com/",
+			href: "https://medium.com/@marharyta.liutova",
 			label: "Medium",
 			icon: "assets/icons/social-medium.svg",
 			external: true,
