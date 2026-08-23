@@ -90,6 +90,8 @@ body {
 	background-size: var(--paper-texture-size);
 	min-height: 100vh;
 	overflow-x: hidden;
+	/* Reserve constant space for the fixed nav so its shrink animation doesn't reflow content */
+	padding-top: var(--nav-h);
 }
 
 /* Custom elements are layout-transparent — their children participate in the parent's flow */
@@ -220,8 +222,10 @@ ul {
    6. Nav
 ------------------------------ */
 .site-nav {
-	position: sticky;
+	position: fixed;
 	top: 0;
+	left: 0;
+	right: 0;
 	z-index: 40;
 	height: var(--nav-h);
 	transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -237,14 +241,12 @@ ul {
 	max-width: var(--page-max);
 	margin-inline: auto;
 	padding-inline: 24px;
+	/* Center-clustered layout. The logo shrinks via transform (no layout box change),
+	   so nav-groups don't drift horizontally when the scrolled state toggles. */
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	gap: 14px;
-	transition: align-items 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.site-nav.is-scrolled .site-nav__inner {
-	align-items: flex-start;
 }
 
 .nav-group {
@@ -256,7 +258,7 @@ ul {
 	transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .site-nav.is-scrolled .nav-group {
-	height: var(--nav-h-scrolled);
+	height: 56px;
 }
 
 .nav-link {
@@ -294,14 +296,12 @@ ul {
 	width: var(--nav-logo);
 	height: var(--nav-logo);
 	flex: 0 0 auto;
-	transition:
-		width 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-		height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+	transform-origin: center;
+	transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .site-nav.is-scrolled .nav-logo {
-	width: var(--nav-logo-scrolled);
-	height: var(--nav-logo-scrolled);
-	align-self: flex-start;
+	/* Transform preserves the layout box so flex siblings don't shift horizontally. */
+	transform: scale(calc(var(--nav-logo-scrolled) / var(--nav-logo)));
 }
 .nav-logo img {
 	width: 100%;
@@ -342,6 +342,7 @@ ul {
 	padding: 20px var(--page-pad-x);
 }
 .sm-strip__item {
+	position: relative;
 	width: 40px;
 	height: 40px;
 	display: grid;
@@ -353,16 +354,28 @@ ul {
 .sm-strip__item:hover {
 	transform: translateY(-3px) scale(1.08);
 }
-.sm-strip__item img {
+.sm-strip__icon {
 	display: block;
+	width: 40px;
+	height: 40px;
 	max-width: 40px;
 	max-height: 40px;
-	transition: filter 0.2s ease;
+	object-fit: contain;
+	transition: opacity 0.2s ease;
 }
-/* Recolor blue #004EA8 SVGs to red #d54232 on hover via filter chain. */
-.sm-strip__item:hover img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+.sm-strip__icon--hover {
+	position: absolute;
+	inset: 0;
+	margin: auto;
+	opacity: 0;
+}
+.sm-strip__item:hover .sm-strip__icon--default,
+.sm-strip__item:focus-visible .sm-strip__icon--default {
+	opacity: 0;
+}
+.sm-strip__item:hover .sm-strip__icon--hover,
+.sm-strip__item:focus-visible .sm-strip__icon--hover {
+	opacity: 1;
 }
 
 /* -----------------------------
@@ -671,15 +684,17 @@ ul {
 	transform: translateY(0);
 }
 .project-card__cta img {
-	width: 42px;
-	height: 42px;
+	width: 28px;
+	height: 28px;
+	/* Source PNG points left; flip to point right ("read more →") */
+	transform: scaleX(-1);
 }
 .project-card__cta:hover {
 	color: var(--primary-red);
 }
+/* Two-state hover: revealed CTA stays blue; turns red only when the CTA strip itself is hovered/focused. */
 .project-card__cta:hover img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+	content: url("../icons/button-arrow-hover.png");
 }
 .project-card__tag-row {
 	display: flex;
@@ -815,13 +830,12 @@ ul {
 .project-card__lock:has(.project-card__lock-input:not(:placeholder-shown))
 	.project-card__lock-submit
 	img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+	content: url("../icons/button-arrow-hover.png");
 }
 .project-card__lock-submit {
 	flex-shrink: 0;
-	width: 28px;
-	height: 23px;
+	width: 56px;
+	height: 44px;
 	padding: 0;
 	border: 0;
 	background: transparent;
@@ -830,15 +844,15 @@ ul {
 	place-items: center;
 }
 .project-card__lock-submit img {
-	width: 28px;
-	height: 23px;
+	width: 56px;
+	height: 44px;
 	object-fit: contain;
-	transition: filter 0.2s ease;
+	/* Source PNG points left; flip to point right ("submit →") */
+	transform: scaleX(-1);
 }
 .project-card__lock-submit:hover img,
 .project-card__lock-submit:focus-visible img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+	content: url("../icons/button-arrow-hover.png");
 }
 /* Error state — wrong password */
 .project-card__lock[data-error="true"] .project-card__lock-input {
@@ -848,8 +862,7 @@ ul {
 	color: var(--primary-red);
 }
 .project-card__lock[data-error="true"] .project-card__lock-submit img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+	content: url("../icons/button-arrow-hover.png");
 }
 
 /* -----------------------------
@@ -907,7 +920,7 @@ ul {
 	align-items: center;
 	gap: 16px;
 	/* room on the right so the absolutely-positioned LinkedIn icon doesn't overlap the name */
-	padding-right: 30px;
+	padding-right: 44px;
 }
 .testimonial-card__avatar {
 	position: relative;
@@ -946,27 +959,34 @@ ul {
 }
 .testimonial-card__li {
 	position: absolute;
-	top: 24px;
-	right: 24px;
-	width: 24px;
-	height: 24px;
-	/* Figma Union inset — glyph fills ~82% × 85% of the 24×24 slot */
-	padding: 2px;
+	top: 12px;
+	right: 12px;
+	width: 56px;
+	height: 56px;
+	padding: 0;
 	box-sizing: border-box;
 	display: grid;
 	place-items: center;
 	z-index: 2;
 }
-.testimonial-card__li img {
+.testimonial-card__li-icon {
 	width: 100%;
 	height: 100%;
-	transition: filter 0.2s ease;
+	object-fit: contain;
+	transition: opacity 0.2s ease;
 }
-/* Common red-icon hover (matches .sm-strip__item, .btn, .link-arrow) */
-.testimonial-card__li:hover img,
-.testimonial-card__li:focus-visible img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+.testimonial-card__li-icon--hover {
+	position: absolute;
+	inset: 0;
+	opacity: 0;
+}
+.testimonial-card__li:hover .testimonial-card__li-icon--default,
+.testimonial-card__li:focus-visible .testimonial-card__li-icon--default {
+	opacity: 0;
+}
+.testimonial-card__li:hover .testimonial-card__li-icon--hover,
+.testimonial-card__li:focus-visible .testimonial-card__li-icon--hover {
+	opacity: 1;
 }
 .testimonial-card__body {
 	font-family: var(--font-body);
@@ -1075,6 +1095,18 @@ body.page-about {
 }
 body.page-about .sm-strip,
 body.page-about .about-hero {
+	background: var(--paper) var(--paper-texture) repeat-y;
+	background-size: var(--paper-texture-size);
+}
+
+/* Case pages: texture only on nav, sm-strip, case title, hero image and case-nav strip */
+body.page-case {
+	background: var(--paper);
+}
+body.page-case .sm-strip,
+body.page-case .case-title,
+body.page-case .case-hero-img,
+body.page-case .case-nav {
 	background: var(--paper) var(--paper-texture) repeat-y;
 	background-size: var(--paper-texture-size);
 }
@@ -1202,21 +1234,33 @@ body.page-about .about-hero {
 	top: 345px;
 }
 
-/* Bio blocks \u2014 Figma "Frame 40214" 1280\u00d71498.9 with two rows:
-   intro (image LEFT 581, text RIGHT 628, gap 71) and closing
-   (text LEFT 628, yellow polaroid picture RIGHT 450 rotated \u22126\u00b0, gap 93). */
+/* Bio blocks - Figma "Frame 40215": a single flex-column that stacks the two
+   bio rows (Frame 40214) and the CTA with a shared 40px gap. Row 1 is a
+   581+71+628 grid (Frame 40211); row 2 is a flex row with space-between so
+   the 628 text sits on the 1280 left edge and the 450 yellow card lands on
+   the 1280 right edge (Frame 40213). */
+.about-bio-stack {
+	display: flex;
+	flex-direction: column;
+	gap: 40px;
+	padding: 40px var(--page-pad-x) 60px;
+	max-width: calc(1280px + var(--page-pad-x) * 2);
+	margin-inline: auto;
+}
 .about-bio {
-	padding: 40px var(--page-pad-x);
 	display: grid;
 	grid-template-columns: 581px 628px;
 	gap: 71px;
 	align-items: center;
-	max-width: calc(1280px + var(--page-pad-x) * 2);
-	margin-inline: auto;
 }
 .about-bio--picture {
-	grid-template-columns: 628px 450px;
+	display: flex;
+	justify-content: space-between;
 	gap: 93px;
+}
+.about-bio--picture .about-bio__body {
+	flex: 0 0 auto;
+	width: 628px;
 }
 .about-bio__body {
 	display: flex;
@@ -1233,10 +1277,6 @@ body.page-about .about-hero {
 .about-bio__body p.about-bio__body--red {
 	color: var(--primary-red);
 }
-.about-bio__body .accent {
-	text-decoration: underline;
-	text-underline-offset: 3px;
-}
 .about-bio__polaroids {
 	display: flex;
 	justify-content: center;
@@ -1248,9 +1288,9 @@ body.page-about .about-hero {
 	display: block;
 }
 .about-bio--picture .about-bio__polaroids {
+	flex: 0 0 auto;
 	width: 450px;
 	aspect-ratio: 450 / 674.56;
-	padding: 20px;
 	background: var(--secondary-yellow);
 	box-shadow: 4px 6px 6.5px rgba(149, 119, 0, 0.3);
 	transform: rotate(-6deg);
@@ -1264,7 +1304,6 @@ body.page-about .about-hero {
 
 .about-cta {
 	text-align: center;
-	padding: 40px var(--page-pad-x) 60px;
 }
 
 /* -----------------------------
@@ -1358,10 +1397,13 @@ body.page-about .about-hero {
 	grid-column: 1 / -1;
 	margin: 0;
 	font-family: var(--font-body);
-	font-weight: 700;
+	font-weight: 400;
 	font-size: 24px;
 	line-height: 1.2;
 	color: var(--primary-blue);
+}
+.case-meta p strong {
+	font-weight: 700;
 }
 .case-meta dt,
 .case-meta dd {
@@ -1426,6 +1468,21 @@ body.page-about .about-hero {
 	text-decoration: underline;
 	color: var(--primary-red);
 }
+/* Placeholder for links whose URL isn't ready yet. Non-interactive; used on a <span>. */
+.case-links__list .link--soon {
+	font-family: var(--font-body);
+	font-weight: 500;
+	font-size: var(--fs-body);
+	line-height: 19px;
+	color: #969696;
+	cursor: not-allowed;
+	user-select: none;
+}
+.case-links__list .link--soon::after {
+	content: " (soon)";
+	font-style: italic;
+	opacity: 0.8;
+}
 
 .case-intro {
 	display: flex;
@@ -1444,6 +1501,8 @@ body.page-about .about-hero {
 	color: var(--primary-red);
 }
 .case-intro .accent {
+	color: var(--primary-red);
+	font-weight: 700;
 	text-decoration: underline;
 	text-underline-offset: 3px;
 }
@@ -1454,13 +1513,30 @@ body.page-about .about-hero {
 }
 
 .case-nav {
-	padding: 40px var(--page-pad-x);
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 30;
+	padding: 16px var(--page-pad-x);
 	display: flex;
 	justify-content: space-between;
 	gap: 24px;
 	font-family: var(--font-display);
 	text-transform: uppercase;
 	font-size: 28px;
+	background: var(--paper) var(--paper-texture) repeat-y;
+	background-size: var(--paper-texture-size);
+	transform: translateY(0);
+	transition:
+		transform 0.3s ease,
+		opacity 0.3s ease;
+	will-change: transform, opacity;
+}
+.case-nav.is-hidden {
+	transform: translateY(100%);
+	opacity: 0;
+	pointer-events: none;
 }
 .case-nav a {
 	color: var(--primary-blue);
@@ -1478,6 +1554,10 @@ body.page-about .about-hero {
 .case-nav .next::after {
 	content: "\2192";
 	font-family: var(--font-body);
+}
+/* Reserve room at the bottom of case pages so the sticky bar doesn't cover content */
+body.page-case main {
+	padding-bottom: 96px;
 }
 
 /* -----------------------------
@@ -1663,10 +1743,16 @@ body.page-about .about-hero {
 	.case-hero__grid {
 		grid-template-columns: 1fr;
 	}
-	.about-bio,
-	.about-bio--picture {
+	.about-bio {
 		grid-template-columns: 1fr;
 		gap: 40px;
+	}
+	.about-bio--picture {
+		flex-direction: column;
+		gap: 40px;
+	}
+	.about-bio--picture .about-bio__body {
+		width: 100%;
 	}
 	.about-bio__polaroids {
 		flex-direction: row;
@@ -1684,6 +1770,7 @@ body.page-about .about-hero {
 		--nav-logo-scrolled: clamp(56px, 16vw, 72px);
 	}
 	.site-nav__inner {
+		/* Mobile: toggle pinned left, spacer pinned right → logo optically centered */
 		justify-content: space-between;
 		padding-inline: 12px;
 		gap: 8px;

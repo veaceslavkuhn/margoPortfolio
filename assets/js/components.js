@@ -73,25 +73,29 @@
 		{
 			href: "mailto:mrg3.designs@gmail.com",
 			label: "Email",
-			icon: "assets/icons/social-mail.svg",
+			iconDefault: "assets/icons/social-mail-default.png",
+			iconHover: "assets/icons/social-mail-hover.png",
 			external: false,
 		},
 		{
 			href: "https://www.linkedin.com/in/margo-liutova/",
 			label: "LinkedIn",
-			icon: "assets/icons/social-linkedin.svg",
+			iconDefault: "assets/icons/social-linkedin-default.png",
+			iconHover: "assets/icons/social-linkedin-hover.png",
 			external: true,
 		},
 		{
 			href: "https://www.instagram.com/designs.mrg/",
 			label: "Instagram",
-			icon: "assets/icons/social-instagram.svg",
+			iconDefault: "assets/icons/social-instagram-default.png",
+			iconHover: "assets/icons/social-instagram-hover.png",
 			external: true,
 		},
 		{
 			href: "https://medium.com/@marharyta.liutova",
 			label: "Medium",
-			icon: "assets/icons/social-medium.svg",
+			iconDefault: "assets/icons/social-medium-default.png",
+			iconHover: "assets/icons/social-medium-hover.png",
 			external: true,
 		},
 	];
@@ -127,7 +131,7 @@
 		connectedCallback() {
 			const items = SOCIAL_LINKS.map(
 				(i) =>
-					`<a class="sm-strip__item" href="${i.href}"${i.external ? ' target="_blank" rel="noopener"' : ""} aria-label="${i.label}"><img src="${BASE}${i.icon}" alt="" /></a>`,
+					`<a class="sm-strip__item" href="${i.href}"${i.external ? ' target="_blank" rel="noopener"' : ""} aria-label="${i.label}"><img class="sm-strip__icon sm-strip__icon--default" src="${BASE}${i.iconDefault}" alt="" /><img class="sm-strip__icon sm-strip__icon--hover" src="${BASE}${i.iconHover}" alt="" aria-hidden="true" /></a>`,
 			).join("\n      ");
 			this.innerHTML = `
 <nav class="sm-strip" aria-label="Social">
@@ -164,7 +168,7 @@
           <p class="testimonial-card__name">${t.name}</p>
           <p class="testimonial-card__role">${t.role}</p>
         </div>
-        <a class="testimonial-card__li" href="${t.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn"><img src="${BASE}assets/icons/linkedin-testimonial.svg" alt="" /></a>
+        <a class="testimonial-card__li" href="${t.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="testimonial-card__li-icon testimonial-card__li-icon--default" src="${BASE}assets/icons/social-linkedin-default.png" alt="" /><img class="testimonial-card__li-icon testimonial-card__li-icon--hover" src="${BASE}assets/icons/social-linkedin-hover.png" alt="" aria-hidden="true" /></a>
       </div>
       <p class="testimonial-card__body testimonial-card__body--short">${t.body}</p>${longBody}
       ${cta}

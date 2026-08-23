@@ -25,9 +25,23 @@
 	 * ---------------------------- */
 	const nav = document.querySelector(".site-nav");
 	if (nav) {
+		// Hysteresis prevents the class from flapping around the threshold.
+		let scrolled = false;
+		let ticking = false;
 		const onScroll = () => {
-			if (window.scrollY > 60) nav.classList.add("is-scrolled");
-			else nav.classList.remove("is-scrolled");
+			if (ticking) return;
+			ticking = true;
+			requestAnimationFrame(() => {
+				const y = window.scrollY;
+				if (!scrolled && y > 80) {
+					scrolled = true;
+					nav.classList.add("is-scrolled");
+				} else if (scrolled && y < 40) {
+					scrolled = false;
+					nav.classList.remove("is-scrolled");
+				}
+				ticking = false;
+			});
 		};
 		window.addEventListener("scroll", onScroll, { passive: true });
 		onScroll();
@@ -231,12 +245,17 @@
 
 	/* ------------------------------
 	 * 4. DKP project — password gate (index page)
-	 *    Correct password (2203) sets localStorage flag and redirects to detail.
+	 *    Correct password (2203) sets a one-shot sessionStorage flag; the detail
+	 *    page consumes and clears it, so every visit re-prompts.
 	 * ---------------------------- */
 	const dkpCard = document.querySelector(".project-card--dkp");
 	if (dkpCard) {
 		const DKP_URL = "projects/dkp.html";
-		const isUnlocked = () => localStorage.getItem("dkp-unlocked") === "true";
+		// Clear legacy persistent flag from earlier versions.
+		try {
+			localStorage.removeItem("dkp-unlocked");
+		} catch (_) {}
+		const isUnlocked = () => sessionStorage.getItem("dkp-unlocked") === "true";
 
 		const applyState = () => {
 			const unlocked = isUnlocked();
@@ -292,7 +311,7 @@
 		form?.addEventListener("submit", (e) => {
 			e.preventDefault();
 			if (input.value === "2203") {
-				localStorage.setItem("dkp-unlocked", "true");
+				sessionStorage.setItem("dkp-unlocked", "true");
 				navigate();
 			} else {
 				form.dataset.error = "true";
@@ -313,5 +332,29 @@
 			if (lockedCta?.contains(e.target)) return;
 			closeForm();
 		});
+	}
+
+	/* ------------------------------
+	 * 5. Case pages — hide the sticky prev/next bar once testimonials/footer scroll into view
+	 * ---------------------------- */
+	const caseNav = document.querySelector(".case-nav");
+	if (caseNav && "IntersectionObserver" in window) {
+		const stopTargets = [
+			document.querySelector(".testimonials"),
+			document.querySelector(".site-footer"),
+		].filter(Boolean);
+		if (stopTargets.length) {
+			const io = new IntersectionObserver(
+				(entries) => {
+					// If any stop target is intersecting the viewport, hide the bar
+					const anyVisible = entries.some((e) => e.isIntersecting);
+					// Use a class so the CSS transition drives the animation
+					if (anyVisible) caseNav.classList.add("is-hidden");
+					else caseNav.classList.remove("is-hidden");
+				},
+				{ root: null, threshold: 0 },
+			);
+			stopTargets.forEach((el) => io.observe(el));
+		}
 	}
 })();
