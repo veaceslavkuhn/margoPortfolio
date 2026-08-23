@@ -793,16 +793,16 @@ ul {
 	max-width: calc(100% - 40px);
 	height: 56px;
 	padding: 16px;
-	background: var(--paper);
+	/* SVG includes both the white fill and the hand-drawn wavy blue outline */
+	background:
+		url("../cardsSvg/password_field.svg") no-repeat center / 100% 100%;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
 	gap: 10px;
 	box-sizing: border-box;
-	/* stacked above the wavy-border ::after overlay (z-index 2) */
 	z-index: 3;
-	--wavy-svg: url("../cardsSvg/password_field.svg");
 }
 .project-card__lock-input {
 	flex: 1;
@@ -1565,8 +1565,7 @@ body.page-case main {
 .case-meta,
 .case-links,
 .fact-card,
-.site-footer__paper,
-.project-card__lock {
+.site-footer__paper {
 	position: relative;
 	isolation: isolate;
 }
@@ -1575,8 +1574,7 @@ body.page-case main {
 .case-meta::after,
 .case-links::after,
 .fact-card::after,
-.site-footer__paper::after,
-.project-card__lock::after {
+.site-footer__paper::after {
 	content: "";
 	position: absolute;
 	inset: 0;
