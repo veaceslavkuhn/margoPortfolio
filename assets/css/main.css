@@ -794,8 +794,6 @@ ul {
 	height: 56px;
 	padding: 16px;
 	background: var(--paper);
-	border: 2px solid var(--primary-blue);
-	border-radius: 4px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -804,6 +802,7 @@ ul {
 	box-sizing: border-box;
 	/* stacked above the wavy-border ::after overlay (z-index 2) */
 	z-index: 3;
+	--wavy-svg: url("../cardsSvg/password_field.svg");
 }
 .project-card__lock-input {
 	flex: 1;
@@ -1071,13 +1070,11 @@ button.testimonial-card__cta .testimonial-card__cta-arrow {
 .testimonial-nav button img {
 	width: 40px;
 	height: 33px;
-	transition: filter 0.2s ease;
 }
-/* Common red-icon hover — matches site pattern */
+/* Swap to the red-fill variant so hover matches --primary-red exactly. */
 .testimonial-nav button:hover img,
 .testimonial-nav button:focus-visible img {
-	filter: brightness(0) saturate(100%) invert(29%) sepia(78%) saturate(1918%)
-		hue-rotate(340deg) brightness(96%) contrast(90%);
+	content: url("../icons/carousel-arrow-red.svg");
 }
 .testimonial-nav .next img {
 	transform: scaleX(-1);
@@ -1502,9 +1499,6 @@ body.page-case .case-nav {
 }
 .case-intro .accent {
 	color: var(--primary-red);
-	font-weight: 700;
-	text-decoration: underline;
-	text-underline-offset: 3px;
 }
 
 .case-cta {
@@ -1571,7 +1565,8 @@ body.page-case main {
 .case-meta,
 .case-links,
 .fact-card,
-.site-footer__paper {
+.site-footer__paper,
+.project-card__lock {
 	position: relative;
 	isolation: isolate;
 }
@@ -1580,7 +1575,8 @@ body.page-case main {
 .case-meta::after,
 .case-links::after,
 .fact-card::after,
-.site-footer__paper::after {
+.site-footer__paper::after,
+.project-card__lock::after {
 	content: "";
 	position: absolute;
 	inset: 0;
