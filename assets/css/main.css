@@ -919,6 +919,9 @@ ul {
 	display: flex;
 	align-items: center;
 	gap: 16px;
+	/* Keep every card's head the same height so quote bodies stay aligned
+	   across the row even when a name or role wraps to two lines. */
+	min-height: 88px;
 }
 .testimonial-card__avatar {
 	position: relative;
@@ -947,6 +950,10 @@ ul {
 	line-height: 28px;
 	color: var(--primary-blue);
 	text-transform: capitalize;
+	overflow-wrap: break-word;
+	/* Reserve room for the absolutely-positioned LinkedIn badge (35px) so a long
+	   name wraps before it instead of running underneath it. */
+	padding-right: 40px;
 }
 .testimonial-card__role {
 	font-family: var(--font-body);
