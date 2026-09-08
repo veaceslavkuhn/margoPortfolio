@@ -1408,9 +1408,9 @@ body.page-case .case-nav {
 	grid-column: 1 / -1;
 	margin: 0;
 	font-family: var(--font-body);
-	font-weight: 700;
+	font-weight: 400;
 	font-size: 24px;
-	line-height: 28px;
+	line-height: 1.2;
 	color: var(--primary-blue);
 }
 .case-meta p strong {
@@ -1455,9 +1455,9 @@ body.page-case .case-nav {
 }
 .case-links__list a {
 	font-family: var(--font-body);
-	font-weight: 500;
-	font-size: 16px;
-	line-height: 19px;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 1.3;
 	color: var(--primary-blue);
 	text-decoration: none;
 }
@@ -1468,9 +1468,9 @@ body.page-case .case-nav {
 /* Placeholder for links whose URL isn't ready yet. Non-interactive; used on a <span>. */
 .case-links__list .link--soon {
 	font-family: var(--font-body);
-	font-weight: 500;
-	font-size: 16px;
-	line-height: 19px;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 1.3;
 	color: #969696;
 	cursor: not-allowed;
 	user-select: none;
