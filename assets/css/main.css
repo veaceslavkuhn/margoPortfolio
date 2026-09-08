@@ -1287,16 +1287,30 @@ body.page-case .case-nav {
 }
 .about-bio--picture .about-bio__polaroids {
 	flex: 0 0 auto;
+	position: relative;
+	display: block;
 	width: 450px;
 	aspect-ratio: 450 / 674.56;
 	background: var(--secondary-yellow);
 	transform: rotate(-6deg);
+	/* Figma "Picture 1": yellow-olive drop shadow, bottom-right, rotates with the tilt.
+	   Not clipped by overflow:hidden (that only clips child content). */
+	box-shadow: 4px 6px 6.5px rgba(149, 119, 0, 0.3);
+	overflow: hidden;
 }
+/* picture-1.svg's canvas (462.995x687.56) is bigger than the photo it holds
+   (449.995x674.56, offset 2.5/0.5). Scale + nudge the SVG so the photo fills the
+   frame edge-to-edge — this hides the uneven transparent margin (old lopsided
+   yellow bleed) and clips the SVG's own baked shadow so it isn't doubled. */
 .about-bio--picture .about-bio__polaroids img {
-	width: 100%;
-	height: 100%;
-	max-width: 100%;
-	object-fit: cover;
+	position: relative;
+	display: block;
+	max-width: none;
+	width: calc(100% * 462.995 / 449.995 + 2px);
+	height: calc(100% * 687.56 / 674.56 + 2px);
+	left: calc(-100% * 2.5 / 449.995 - 1px);
+	top: calc(-100% * 0.5 / 674.56 - 1px);
+	object-fit: fill;
 }
 
 .about-cta {
@@ -1394,27 +1408,13 @@ body.page-case .case-nav {
 	grid-column: 1 / -1;
 	margin: 0;
 	font-family: var(--font-body);
-	font-weight: 400;
-	font-size: 24px;
-	line-height: 1.2;
-	color: var(--primary-blue);
-}
-.case-meta p strong {
 	font-weight: 700;
-}
-.case-meta dt,
-.case-meta dd {
-	margin: 0;
-	font-family: var(--font-body);
 	font-size: 24px;
 	line-height: 28px;
 	color: var(--primary-blue);
 }
-.case-meta dt {
+.case-meta p strong {
 	font-weight: 700;
-}
-.case-meta dd {
-	font-weight: 300;
 }
 
 .case-links {
@@ -1426,7 +1426,7 @@ body.page-case .case-nav {
 }
 .case-links__title {
 	font-family: var(--font-body);
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 24px;
 	line-height: 28px;
 	color: var(--primary-blue);
@@ -1455,9 +1455,9 @@ body.page-case .case-nav {
 }
 .case-links__list a {
 	font-family: var(--font-body);
-	font-weight: 300;
-	font-size: 24px;
-	line-height: 1.3;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
 	color: var(--primary-blue);
 	text-decoration: none;
 }
@@ -1468,9 +1468,9 @@ body.page-case .case-nav {
 /* Placeholder for links whose URL isn't ready yet. Non-interactive; used on a <span>. */
 .case-links__list .link--soon {
 	font-family: var(--font-body);
-	font-weight: 300;
-	font-size: 24px;
-	line-height: 1.3;
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
 	color: #969696;
 	cursor: not-allowed;
 	user-select: none;
@@ -1754,9 +1754,6 @@ body.page-case main {
 	}
 	.about-bio__polaroids {
 		flex-direction: row;
-	}
-	.about-bio--picture .about-bio__polaroids img {
-		width: min(450px, 80%);
 	}
 }
 @media (max-width: 860px) {
