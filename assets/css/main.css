@@ -897,9 +897,9 @@ ul {
 	gap: 16px;
 	padding: 24px;
 	min-height: 327px;
-	/* SVG carries both the white interior + wavy blue outline in one asset */
-	background:
-		url("../cardsSvg/testimonials_card.svg") no-repeat center / 100% 100%;
+	/* Same construction as .project-card: solid fill + wavy blue outline drawn
+	   by the shared ::after overlay (see --wavy-svg below). */
+	background: var(--white);
 }
 .testimonial-card.is-expanded {
 	justify-content: flex-start;
@@ -915,11 +915,10 @@ ul {
 	}
 }
 .testimonial-card__head {
+	position: relative;
 	display: flex;
 	align-items: center;
 	gap: 16px;
-	/* room on the right so the absolutely-positioned LinkedIn icon doesn't overlap the name */
-	padding-right: 44px;
 }
 .testimonial-card__avatar {
 	position: relative;
@@ -957,16 +956,18 @@ ul {
 	color: var(--primary-blue);
 }
 .testimonial-card__li {
+	/* Pinned to the head row's top-right corner (Figma: left 333 / top 0 in the
+	   363px content box). Head is position:relative + isolate. */
 	position: absolute;
-	top: 12px;
-	right: 12px;
-	width: 56px;
-	height: 56px;
+	top: 0;
+	right: 0;
+	width: 35px;
+	height: 35px;
 	padding: 0;
 	box-sizing: border-box;
 	display: grid;
 	place-items: center;
-	z-index: 2;
+	z-index: 3;
 }
 .testimonial-card__li-icon {
 	width: 100%;
@@ -1054,8 +1055,8 @@ button.testimonial-card__cta .testimonial-card__cta-arrow {
 	margin-top: 24px;
 }
 .testimonial-nav button {
-	width: 40px;
-	height: 33px;
+	width: 30px;
+	height: 25px;
 	display: grid;
 	place-items: center;
 	background: transparent;
@@ -1068,8 +1069,8 @@ button.testimonial-card__cta .testimonial-card__cta-arrow {
 	transform: scale(1.1);
 }
 .testimonial-nav button img {
-	width: 40px;
-	height: 33px;
+	width: 30px;
+	height: 25px;
 }
 /* Swap to the red-fill variant so hover matches --primary-red exactly. */
 .testimonial-nav button:hover img,
@@ -1289,7 +1290,6 @@ body.page-case .case-nav {
 	width: 450px;
 	aspect-ratio: 450 / 674.56;
 	background: var(--secondary-yellow);
-	box-shadow: 4px 6px 6.5px rgba(149, 119, 0, 0.3);
 	transform: rotate(-6deg);
 }
 .about-bio--picture .about-bio__polaroids img {
@@ -1426,7 +1426,7 @@ body.page-case .case-nav {
 }
 .case-links__title {
 	font-family: var(--font-body);
-	font-weight: 600;
+	font-weight: 700;
 	font-size: 24px;
 	line-height: 28px;
 	color: var(--primary-blue);
@@ -1455,9 +1455,9 @@ body.page-case .case-nav {
 }
 .case-links__list a {
 	font-family: var(--font-body);
-	font-weight: 500;
-	font-size: var(--fs-body);
-	line-height: 19px;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 1.3;
 	color: var(--primary-blue);
 	text-decoration: none;
 }
@@ -1468,9 +1468,9 @@ body.page-case .case-nav {
 /* Placeholder for links whose URL isn't ready yet. Non-interactive; used on a <span>. */
 .case-links__list .link--soon {
 	font-family: var(--font-body);
-	font-weight: 500;
-	font-size: var(--fs-body);
-	line-height: 19px;
+	font-weight: 300;
+	font-size: 24px;
+	line-height: 1.3;
 	color: #969696;
 	cursor: not-allowed;
 	user-select: none;
@@ -1570,6 +1570,7 @@ body.page-case main {
 	isolation: isolate;
 }
 .project-card::after,
+.testimonial-card::after,
 .case-hero-img__frame::after,
 .case-meta::after,
 .case-links::after,
@@ -1584,6 +1585,9 @@ body.page-case main {
 }
 .project-card {
 	--wavy-svg: url("../cardsSvg/project_card.svg");
+}
+.testimonial-card {
+	--wavy-svg: url("../cardsSvg/testimonials_card_outline.svg");
 }
 .case-hero-img__frame {
 	--wavy-svg: url("../cardsSvg/project_main_pic.svg");

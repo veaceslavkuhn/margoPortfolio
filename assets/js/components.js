@@ -85,7 +85,7 @@
 			external: true,
 		},
 		{
-			href: "https://www.instagram.com/designs.mrg/",
+			href: "https://www.instagram.com/mrg22_com/",
 			label: "Instagram",
 			iconDefault: "assets/icons/social-instagram-default.png",
 			iconHover: "assets/icons/social-instagram-hover.png",
@@ -119,7 +119,7 @@
       <img src="${BASE}assets/common/logo.svg" alt="Margo logo" />
     </a>
     <div class="nav-group" id="nav-menu-2">
-      <a class="nav-link" href="https://drive.google.com/drive/u/2/my-drive" target="_blank" rel="noopener">cv</a>
+      <a class="nav-link" href="https://drive.google.com/file/d/1oLK_0sZ0PricSIvHxVgd5LLqjXzax9H_/view?usp=drive_link" target="_blank" rel="noopener">cv</a>
       <a class="nav-link" href="mailto:mrg3.designs@gmail.com">contact</a>
     </div>
   </div>
@@ -205,7 +205,7 @@
       <a class="site-footer__brand" href="https://www.mrg22.com/">mrg22.com</a>
       <a href="${BASE}index.html#projects">Projects</a>
       <a href="${BASE}about.html">About</a>
-      <a href="https://drive.google.com/drive/u/2/my-drive" target="_blank" rel="noopener">CV</a>
+      <a href="https://drive.google.com/file/d/1oLK_0sZ0PricSIvHxVgd5LLqjXzax9H_/view?usp=drive_link" target="_blank" rel="noopener">CV</a>
       <a href="mailto:mrg3.designs@gmail.com">Contact</a>
     </nav>
   </div>
