@@ -3,13 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Theme before first paint (no flash): Classic by default, Funky if chosen via the nav switch.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (_) {}
+      document.documentElement.dataset.theme = t === "funky" ? "funky" : "classic";
+    })();
+  </script>
   <title>My Portfolio — Margo Liutova</title>
   <meta name="description" content="Case study: rebuilding my own portfolio site in 2026 — a hand-drawn, personality-first designer showcase." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="../assets/common/logo.svg" />
   <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classic.css" />
 </head>
 <body class="page-case">
 
@@ -22,7 +31,7 @@
     <h1 class="case-title">My Portfolio</h1>
 
     <section class="case-hero-img" aria-label="My Portfolio preview">
-      <div class="case-hero-img__frame"><img src="../assets/projects/my-portfolio/hero.png" alt="My Portfolio" /></div>
+      <div class="case-hero-img__frame"><img data-only="funky" src="../assets/projects/my-portfolio/hero.png" alt="My Portfolio" /><img data-only="classic" src="../assets/classic/my-portfolio.jpg" alt="My Portfolio" /></div>
     </section>
 
     <margo-case-nav current="my-portfolio"></margo-case-nav>
@@ -34,19 +43,23 @@
           <p><strong>Role:</strong> UI/UX Designer, Graphic Designer</p>
           <p><strong>Date:</strong> March-June 2026</p>
           <p><strong>Team:</strong> Margo Liutova, Veaceslav Grigorov</p>
-          <p><strong>Tools:</strong> Figma, Readymag, Nano Banana, Claude, CoPilot</p>
+          <p><strong>Tools:</strong> Figma, Nano Banana, Claude, CoPilot</p>
         </div>
         <div class="case-links">
           <p class="case-links__title">Main links</p>
-          <p class="case-links__wip">WORK IN PROGRESS</p>
+          <ul class="case-links__list">
+            <li><a href="https://www.figma.com/proto/N5lLqj1X9fPV51IvoBPFso/Portfolio-new?node-id=412-4942&p=f&viewport=499%2C268%2C0.02&t=D6kY8VeZPw99Mep8-9&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=412%3A4942&show-proto-sidebar=1&page-id=412%3A4897" target="_blank" rel="noopener noreferrer">Figma prototype</a></li>
+            <li><a href="https://www.figma.com/design/N5lLqj1X9fPV51IvoBPFso/Portfolio-new?node-id=412-4897" target="_blank" rel="noopener noreferrer">Figma file</a></li>
+            <li><a href="https://medium.com/@marharyta.liutova/ux-ui-case-study-my-portfolio-ec774d5cc9bc" target="_blank" rel="noopener noreferrer">Medium article</a></li>
+          </ul>
         </div>
       </div>
       <div class="case-intro">
-        <p>At the beginning of 2026, I found myself at a turning point. After being let go from a <span class="accent">Berlin-based business consultant startup</span> where I had worn many hats simultaneously — <span class="accent">UX/UI designer</span>, <span class="accent">graphic designer</span>, and <span class="accent">motion designer</span> — I faced the challenge that every designer eventually confronts: how do I show who I am, not just what I can do?</p>
-        <p>My background is anything but conventional. Eight years teaching English as a second language. A move to Berlin. Five languages. Daily ashtanga yoga practice. A recent monastery retreat in Thailand. These weren&rsquo;t peripheral details — they were the raw material of an identity that refused to fit into a standard portfolio template.</p>
-        <p class="case-intro__red">I needed a portfolio that looked like me, not like a design template everyone else was using.</p>
+        <p>At the beginning of 2026, I found myself at a turning point. After going from a <span class="accent">Berlin-based business consultant startup</span> where I had worn many hats simultaneously — <span class="accent">UX/UI designer</span>, <span class="accent">graphic designer</span>, and <span class="accent">motion designer</span> — I faced the challenge that every designer eventually confronts: how do I show who I am, not just what I can do?</p>
+        <p>My background is eight years teaching English as a second language. A move to Berlin. Five languages. Nature watching. A recent monastery retreat in Thailand. These weren&rsquo;t peripheral details — they were the raw material of an identity.</p>
+        <p><span class="accent">I wanted to create a portfolio that looked like me, not like a design template everyone else was using.</span></p>
       </div>
-      <a class="btn btn--full-case-study btn--disabled" href="#" aria-disabled="true">full case study</a>
+      <a class="btn btn--full-case-study" href="https://medium.com/@marharyta.liutova/ux-ui-case-study-my-portfolio-ec774d5cc9bc" target="_blank" rel="noopener noreferrer">full case study</a>
     </section>
 
     <margo-testimonials></margo-testimonials>

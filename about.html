@@ -3,13 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Theme before first paint (no flash): Classic by default, Funky if chosen via the nav switch.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (_) {}
+      document.documentElement.dataset.theme = t === "funky" ? "funky" : "classic";
+    })();
+  </script>
   <title>About — Margo Liutova, UI/UX Designer</title>
   <meta name="description" content="Meet Margo — UI/UX Designer with roots in Ukraine and Moldova, based in Berlin. Language teacher turned visual designer, on the mat, in the streets, with a camera." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="assets/common/logo.svg" />
   <link rel="stylesheet" href="assets/css/main.css" />
+  <link rel="stylesheet" href="assets/css/classic.css" />
 </head>
 <body class="page-about">
 
@@ -21,8 +30,8 @@
     <!-- SM strip -->
     <margo-sm-strip></margo-sm-strip>
 
-    <!-- Hero: photo collage -->
-    <section class="about-hero" aria-label="Portrait">
+    <!-- Hero: photo collage (Funky) -->
+    <section class="about-hero" data-only="funky" aria-label="Portrait">
       <div class="collage" role="img" aria-label="Portrait of Margo surrounded by tarot cards, buddha statue, a shell, a stone, a flower, and a passport">
         <div class="collage__item collage__item--portrait">
           <img class="collage__img collage__img--default" src="assets/about/portrait.png" alt="Margo Liutova" />
@@ -52,6 +61,18 @@
           <img class="collage__img collage__img--default" src="assets/about/passport.png" alt="" />
           <img class="collage__img collage__img--hover"   src="assets/about/passport-hover.png" alt="" aria-hidden="true" />
         </div>
+      </div>
+    </section>
+
+    <!-- Intro: portrait + hello (Classic, Figma 895:3495) -->
+    <section class="about-intro" data-only="classic" aria-label="About Margo">
+      <div class="about-intro__photo">
+        <img src="assets/about/portrait.png" alt="Margo Liutova" />
+      </div>
+      <div class="about-intro__body">
+        <p>Hi, I&rsquo;m Margo, <span class="accent">a UI/UX designer in Berlin</span>. I start most my days with meditation and yoga, then pull a daily tarot card to bring a little magic into the day.</p>
+        <p>I love exploring the world (I always pick holidays by the sea over the mountains) and I come home with some stones from everywhere, and dried flowers from the people who gave them to me, so the memory is kept.</p>
+        <p>That habit of noticing small things and keeping what matters shows up in how I design: warm, calm, and made with care for the person on the other side of the screen.</p>
       </div>
     </section>
 
@@ -89,7 +110,7 @@
       </section>
 
       <div class="about-cta">
-        <a class="btn btn--text-me" href="mailto:mrg3.designs@gmail.com">text me</a>
+        <a class="btn btn--text-me" href="mailto:mrg3.designs@gmail.com"><span data-only="funky">text me</span><span data-only="classic">connect</span></a>
       </div>
     </div>
 

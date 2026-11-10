@@ -132,6 +132,13 @@ ul {
 /* -----------------------------
    4. Utility
 ------------------------------ */
+/* Theme-specific markup: <html data-theme="classic|funky"> (set in <head>) hides the
+   other theme's blocks. Classic is the default; theme styles live in classic.css. */
+:root:not([data-theme="funky"]) [data-only="funky"],
+:root[data-theme="funky"] [data-only="classic"] {
+	display: none !important;
+}
+
 .container {
 	width: 100%;
 	max-width: var(--page-max);
@@ -307,6 +314,94 @@ ul {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
+}
+
+/* Theme switch — Figma "Toggle" (designer round 2, pasted Dev Mode CSS).
+   Row: label + 58×32 pill, gap 8. Pinned to the nav's right edge on desktop.
+   Classic: "Want to make it funky?"   grey track, red star left.
+   Funky:   "Want to make it classic?" yellow track, blue star right. */
+.site-nav__inner {
+	position: relative;
+}
+.theme-toggle {
+	position: absolute;
+	right: 40px;
+	top: 50%;
+	transform: translateY(-50%);
+	z-index: 3;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	gap: 8px;
+	padding: 4px;
+	font-family: "Chiron GoRound TC", var(--font-body);
+	font-weight: 500;
+	font-size: 16px;
+	line-height: 19px;
+	color: var(--primary-blue);
+	white-space: nowrap;
+}
+/* Accent word (designer SVG export "svg toggles"): red; "FUNKY" in the MANIC hand font */
+.theme-toggle__word {
+	color: var(--primary-red);
+}
+.theme-toggle__word--funky {
+	font-family: "MANIC", var(--font-body);
+	font-weight: 400;
+	font-size: 18px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+.theme-toggle__track {
+	position: relative;
+	flex: 0 0 auto;
+	display: block;
+	width: 58px;
+	height: 32px;
+	border-radius: 87px;
+	border: 1px solid #efefef;
+	box-sizing: border-box;
+	background: #d9d9d9;
+	transition: background-color 0.3s ease;
+}
+/* Knob box is 40px: the star in star.svg fills ~81% of its canvas → 32px visible star (Figma "Red sun" 32×32) */
+.theme-toggle__knob {
+	position: absolute;
+	top: 50%;
+	left: -4px;
+	width: 40px;
+	height: 40px;
+	color: var(--primary-red);
+	transform: translateY(-50%) rotate(0deg);
+	filter: drop-shadow(0 3px 1px rgba(0, 0, 0, 0.06))
+		drop-shadow(0 3px 8px rgba(0, 0, 0, 0.15));
+	transition:
+		left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+		transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+		color 0.3s ease;
+}
+/* Figma star (assets/classic/star.svg) as a mask so the knob can switch red ⇄ blue */
+.theme-toggle__star {
+	display: block;
+	width: 100%;
+	height: 100%;
+	background-color: currentColor;
+	-webkit-mask: url("../classic/star.svg") center / contain no-repeat;
+	mask: url("../classic/star.svg") center / contain no-repeat;
+}
+.theme-toggle[aria-checked="true"] .theme-toggle__track {
+	background: var(--secondary-yellow);
+}
+.theme-toggle[aria-checked="true"] .theme-toggle__knob {
+	left: 20px;
+	color: var(--primary-blue);
+	transform: translateY(-50%) rotate(90deg);
+}
+@media (prefers-reduced-motion: reduce) {
+	.theme-toggle__track,
+	.theme-toggle__knob {
+		transition: none;
+	}
 }
 
 .nav-toggle {
@@ -537,6 +632,34 @@ ul {
 }
 .fact-card__body strong {
 	font-weight: 700;
+	color: var(--primary-red);
+}
+
+/* Facts carousel "next" arrow — only shown on phones (≤860px), both themes.
+   Funky: hand-drawn carousel arrow; Classic swaps in its thin arrow (classic.css). */
+.facts__next {
+	display: none;
+	margin: 8px 0 0 auto;
+	width: 44px;
+	height: 44px;
+	align-items: center;
+	justify-content: center;
+	color: var(--primary-blue);
+}
+.facts__next::before {
+	content: "";
+	width: 32px;
+	height: 32px;
+	background-color: currentColor;
+	-webkit-mask: url("../icons/carousel-arrow.svg") center / contain no-repeat;
+	mask: url("../icons/carousel-arrow.svg") center / contain no-repeat;
+	transform: scaleX(-1); /* source arrow points left */
+}
+:root:not([data-theme="funky"]) .facts__next::before {
+	transform: none;
+}
+.facts__next:hover,
+.facts__next:focus-visible {
 	color: var(--primary-red);
 }
 
@@ -1556,6 +1679,17 @@ body.page-case .case-nav {
 	content: "\2192";
 	font-family: var(--font-body);
 }
+/* Labels: Funky desktop names the neighbouring project, Classic (and phones) say
+   "previous project / next project". */
+.case-nav__generic {
+	display: none;
+}
+:root:not([data-theme="funky"]) .case-nav__name {
+	display: none;
+}
+:root:not([data-theme="funky"]) .case-nav__generic {
+	display: inline;
+}
 /* Reserve room at the bottom of case pages so the sticky bar doesn't cover content */
 body.page-case main {
 	padding-bottom: 96px;
@@ -1710,6 +1844,28 @@ body.page-case main {
 	color: var(--primary-red);
 }
 
+/* Funky mobile footer bar (shown ≤860px instead of the hearts strip) */
+.site-footer__mobile-bar {
+	display: none;
+	position: relative;
+	z-index: 3;
+	margin-top: -14px; /* covers the paper's wavy bottom edge (Figma shows only the top wave) */
+	grid-template-columns: 1fr auto 1fr;
+	align-items: center;
+	min-height: 56px;
+	padding: 0 16px;
+	background: var(--primary-red);
+	color: var(--white);
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: 12px;
+	line-height: 1.3;
+}
+.site-footer__heart {
+	width: 28px;
+	height: 34px;
+	background: url("../common/footer-heart.png") center / contain no-repeat;
+}
 .site-footer__hearts {
 	position: relative;
 	width: 100%;
@@ -1771,17 +1927,35 @@ body.page-case main {
 		--nav-logo: clamp(72px, 22vw, 96px);
 		--nav-logo-scrolled: clamp(56px, 16vw, 72px);
 	}
+	/* Mobile nav — designer round 2 (Figma mobile nav component, "more svg"):
+	   [spacer][logo][☰ → ✕] in both themes; the theme switch sits inside the open menu. */
+	:root {
+		--menu-icon: url("../icons/menu-funky.svg");
+		--close-icon: url("../icons/close-funky.svg");
+	}
 	.site-nav__inner {
-		/* Mobile: toggle pinned left, spacer pinned right → logo optically centered */
 		justify-content: space-between;
 		padding-inline: 12px;
 		gap: 8px;
 	}
-	/* Right-side spacer keeps the logo optically centered when groups are collapsed */
-	.site-nav__inner::after {
+	/* Left spacer = menu button width, keeps the logo centred */
+	.site-nav__inner::before {
 		content: "";
 		flex: 0 0 44px;
 		height: 44px;
+		order: -1;
+	}
+	.theme-toggle {
+		display: none;
+		position: static;
+		transform: none;
+	}
+	.site-nav.is-open .theme-toggle {
+		display: flex;
+		order: 4;
+		flex-basis: 100%;
+		justify-content: center;
+		padding: 20px 0 4px;
 	}
 	.site-nav.is-scrolled .site-nav__inner {
 		align-items: center;
@@ -1790,16 +1964,38 @@ body.page-case main {
 		align-self: center;
 	}
 	.nav-toggle {
+		order: 2;
 		display: grid;
 		place-items: center;
 		width: 44px;
 		height: 44px;
-		border: 2px solid var(--primary-red);
+		border: 0;
 		background: transparent;
-		color: var(--primary-red);
+		color: var(--primary-blue);
 		padding: 0;
 		cursor: pointer;
 		flex: 0 0 auto;
+	}
+	.nav-toggle:hover,
+	.nav-toggle:focus-visible {
+		color: var(--primary-red);
+	}
+	/* Designer icons (assets/icons/menu-*.svg, close-*.svg) replace the inline SVG lines */
+	.nav-toggle .nav-toggle__icon,
+	.site-nav.is-open .nav-toggle .nav-toggle__icon {
+		display: none;
+	}
+	.nav-toggle::before {
+		content: "";
+		width: 32px;
+		height: 32px;
+		background-color: currentColor;
+		-webkit-mask: var(--menu-icon) center / contain no-repeat;
+		mask: var(--menu-icon) center / contain no-repeat;
+	}
+	.site-nav.is-open .nav-toggle::before {
+		-webkit-mask-image: var(--close-icon);
+		mask-image: var(--close-icon);
 	}
 	.nav-group {
 		display: none;
@@ -1830,22 +2026,28 @@ body.page-case main {
 		height: auto;
 		flex-wrap: wrap;
 		align-items: center;
+		row-gap: 0; /* the two link groups wrap as separate rows — keep one even rhythm */
 		padding-bottom: 20px;
 	}
+	/* Open menu: centred links, ~64px rhythm (Figma open state) */
 	.site-nav.is-open .nav-group {
 		display: flex;
 		flex-direction: column;
 		flex-basis: 100%;
-		align-items: stretch;
-		gap: 4px;
-		padding: 8px 4px 0;
+		align-items: center;
+		gap: 0;
+		padding: 0;
 		order: 3;
 	}
+	.site-nav.is-open #nav-menu {
+		padding-top: 12px;
+	}
 	.site-nav.is-open .nav-group .nav-link {
-		width: 100%;
-		min-height: 44px;
+		width: auto;
+		min-width: 160px;
+		min-height: 56px;
 		padding: 10px 12px;
-		font-size: 22px;
+		font-size: 24px;
 	}
 	body.nav-open {
 		overflow: hidden;
@@ -1867,8 +2069,87 @@ body.page-case main {
 		}
 	}
 
+	/* Hero (Figma Funky "Home mob"): 32px title on three lines —
+	   "Hi! I'm MARGO." / "UI/UX DESIGNER" / "based in Berlin." — 20px subtitle, stacked buttons */
+	.hero {
+		padding: 16px var(--page-pad-x) 24px;
+	}
 	.hero__title {
-		font-size: clamp(40px, 12vw, 72px);
+		font-size: 32px;
+		line-height: 38px;
+	}
+	:root[data-theme="funky"] .hero__title .accent.manic {
+		line-height: 44px;
+	}
+	:root[data-theme="funky"] .fact-card__title {
+		font-size: 20px;
+		line-height: 28px;
+	}
+	.hero__title br {
+		display: none;
+	}
+	.hero__title .accent:not(.accent--name) {
+		display: block;
+	}
+	.hero__sub {
+		margin-top: 8px;
+		font-size: 20px;
+	}
+	.hero__sub br {
+		display: none;
+	}
+	.hero__actions {
+		margin-top: 24px;
+		flex-direction: column;
+		gap: 16px;
+	}
+
+	/* Facts: horizontal swipe carousel in both themes (designer); arrow advances one card */
+	.facts {
+		padding: 16px var(--page-pad-x) 24px;
+	}
+	.facts__grid {
+		display: flex;
+		justify-content: flex-start; /* the desktop grid is centred — would push card 1 off-screen */
+		gap: 16px;
+		overflow-x: auto;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		overscroll-behavior-x: contain;
+		scrollbar-width: none;
+	}
+	.facts__grid::-webkit-scrollbar {
+		display: none;
+	}
+	.fact-card {
+		flex: 0 0 100%;
+		max-width: none;
+		scroll-snap-align: start;
+	}
+	.facts__next {
+		display: flex;
+	}
+
+	/* Funky mobile top block (Figma "Texture background" 684×912 @ 30%): nav + icons + hero +
+	   facts sit on ONE continuous paper photo instead of the tiled texture (which showed seams).
+	   The block starts under the fixed nav and the nav shows the same top slice, so they line up. */
+	:root[data-theme="funky"] {
+		--hero-paper:
+			linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)),
+			url("../common/paper-hero-mobile.jpg") center top / max(684px, 100%) auto no-repeat,
+			var(--paper);
+	}
+	:root[data-theme="funky"] body:has(.home-top) {
+		background: var(--paper);
+	}
+	:root[data-theme="funky"] body:has(.home-top) .site-nav,
+	:root[data-theme="funky"] .home-top {
+		background: var(--hero-paper);
+	}
+	:root[data-theme="funky"] .home-top {
+		margin-top: calc(-1 * var(--nav-h));
+		padding-top: var(--nav-h);
+		box-shadow: 0 4px 7px rgba(214, 210, 211, 0.25);
 	}
 	.project-grid {
 		grid-template-columns: 1fr;
@@ -1888,29 +2169,202 @@ body.page-case main {
 		left: calc(50% - 109px);
 		top: 40px;
 	}
+	/* Footer (Funky mobile, designer round 2): full-width paper with only the wavy top
+	   edge on screen (sides pushed past the viewport, bottom covered by the red bar),
+	   brand left / links right, red bar with © + one heart. */
+	.site-footer {
+		padding-top: 24px;
+		overflow: hidden; /* clip the paper's off-screen sides — no sideways scroll */
+	}
 	.site-footer__paper {
-		margin: 0 var(--page-pad-x);
-		padding: 60px 20px 110px;
-		gap: 40px;
+		margin: 0 -8px;
+		padding: 56px 28px 44px;
+		gap: 32px;
 	}
 	.site-footer__love {
 		font-size: 32px;
+		line-height: 1.3;
 	}
 	.site-footer__meta {
-		flex-wrap: wrap;
-		gap: 12px 24px;
-		text-align: center;
+		flex-wrap: nowrap;
+		justify-content: space-between;
+		gap: 12px;
+		max-width: none;
+	}
+	.site-footer__meta a {
+		font-size: 12px;
+	}
+	.site-footer__meta a.site-footer__brand {
+		font-size: 16px;
 	}
 	.site-footer__hearts {
-		height: 90px;
-		margin-top: -90px;
+		display: none;
+	}
+	.site-footer__mobile-bar {
+		display: grid;
+	}
+
+	/* Project pages (designer round 2, "projects pages mob svg" — Figma mobile
+	   Project frame). Both themes: prev/next sits inline under the hero instead
+	   of the sticky bottom bar, overview boxes stack, smaller type. */
+	body.page-case main {
+		padding-bottom: 0;
+	}
+	.case-title {
+		font-size: 32px;
+		line-height: 40px;
+		padding: 24px var(--page-pad-x) 16px;
+	}
+	.case-hero-img {
+		padding: 0 16px;
+	}
+	.case-hero-img__frame {
+		aspect-ratio: 358 / 170;
+	}
+	.case-nav,
+	.case-nav.is-hidden {
+		position: static;
+		transform: none;
+		opacity: 1;
+		pointer-events: auto;
+		will-change: auto;
+		transition: none;
+	}
+	.case-nav {
+		padding: 28px 24px 40px;
+		font-family: var(--font-body);
+		font-weight: 700;
+		font-size: 16px;
+		line-height: 22px;
+		text-transform: none;
+	}
+	.case-nav a {
+		gap: 8px;
+	}
+	.case-nav .prev::before,
+	.case-nav .next::after {
+		font-size: 22px;
+		font-weight: 400;
+	}
+	:root[data-theme="funky"] .case-nav__name {
+		display: none;
+	}
+	:root[data-theme="funky"] .case-nav__generic {
+		display: inline;
+	}
+	.case-overview {
+		padding: 64px 16px 0;
+		gap: 16px;
+		background: var(--paper);
+	}
+	.case-overview .section-head__title {
+		font-size: 32px;
+		line-height: 44px;
+		text-align: center;
+		margin-bottom: 16px;
+	}
+	.case-overview__grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+	.case-meta {
+		min-height: 0;
+		padding: 24px;
+		gap: 20px;
+	}
+	.case-meta p {
+		font-size: 20px;
+		line-height: 26px;
+	}
+	.case-links {
+		min-height: 0;
+		padding: 24px;
+		gap: 12px;
+	}
+	.case-links__title {
+		font-size: 20px;
+		line-height: 26px;
+		font-weight: 700;
+	}
+	.case-links__list {
+		gap: 6px;
+	}
+	.case-links__list a,
+	.case-links__list .link--soon {
+		font-size: 16px;
+		line-height: 22px;
+		font-weight: 600;
+	}
+	.case-links__wip {
+		font-size: 32px;
+		line-height: 44px;
+	}
+	.case-intro {
+		gap: 16px;
+	}
+	.case-intro p {
+		font-size: 16px;
+		line-height: 25px;
+	}
+	.case-overview > .btn {
+		margin-top: 24px;
+	}
+	body.page-case .testimonials .section-head__title {
+		font-size: 32px;
+		line-height: 44px;
+	}
+
+	/* Funky: the nav, icons, title, hero and prev/next share one paper photo
+	   (like the Home top block); the overview starts on white with a soft shadow. */
+	:root[data-theme="funky"] body.page-case {
+		background: var(--hero-paper);
+	}
+	:root[data-theme="funky"] body.page-case .site-nav {
+		background: var(--hero-paper);
+	}
+	:root[data-theme="funky"] body.page-case .sm-strip,
+	:root[data-theme="funky"] body.page-case .case-title,
+	:root[data-theme="funky"] body.page-case .case-hero-img,
+	:root[data-theme="funky"] body.page-case .case-nav {
+		background: transparent;
+	}
+	:root[data-theme="funky"] body.page-case .case-overview {
+		box-shadow: inset 0 4px 7px rgba(214, 210, 211, 0.25);
+	}
+	:root[data-theme="funky"] body.page-case .case-overview ~ *,
+	:root[data-theme="funky"] body.page-case .testimonials {
+		background: var(--paper);
+	}
+
+	/* Funky testimonials (Home + project pages): one → arrow on the right, as in the
+	   design; the carousel loops, so "previous" isn't needed. */
+	:root[data-theme="funky"] .testimonial-nav {
+		justify-content: flex-end;
+	}
+	:root[data-theme="funky"] .testimonial-nav .prev {
+		display: none;
+	}
+	:root[data-theme="funky"] .testimonials {
+		padding: 72px 16px 56px;
+	}
+	:root[data-theme="funky"] .testimonial-card {
+		padding: 16px;
+		min-height: 0;
+	}
+	:root[data-theme="funky"] .testimonial-card__avatar,
+	:root[data-theme="funky"] .testimonial-card__photo {
+		width: 100px;
+		height: 74px;
+	}
+	:root[data-theme="funky"] .testimonial-card__head {
+		min-height: 74px;
 	}
 }
 
 @media (max-width: 480px) {
-	/* Keep "I create things with LOVE" on a single line */
+	/* Figma mobile footer: "I create things / with LOVE" on two lines */
 	.site-footer__love {
-		font-size: 24px;
-		line-height: 1.4;
+		font-size: 30px;
+		line-height: 1.3;
 	}
 }

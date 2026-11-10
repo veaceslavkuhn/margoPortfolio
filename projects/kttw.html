@@ -3,13 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Theme before first paint (no flash): Classic by default, Funky if chosen via the nav switch.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (_) {}
+      document.documentElement.dataset.theme = t === "funky" ? "funky" : "classic";
+    })();
+  </script>
   <title>Keri takes the wheel — Margo Liutova</title>
   <meta name="description" content="Case study: Keri Takes the Wheel — a personal e-commerce website for a ceramic artist selling handmade pottery." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="../assets/common/logo.svg" />
   <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classic.css" />
 </head>
 <body class="page-case">
 
@@ -48,9 +57,10 @@
         </div>
       </div>
       <div class="case-intro">
-        <p>The project&rsquo;s name is <span class="accent">&ldquo;Keri Takes the Wheel&rdquo;</span>. <span class="accent">So who is Keri?</span> Keri is an American who currently lives in the Netherlands. She works in sales at a software company. A long time ago in high school, she started doing pottery and didn&rsquo;t do it for 12 years, and then she decided to return to her hobby.</p>
-        <p>She decided she wanted <span class="accent">a personal website for herself to sell her pieces</span>. A success for her starts when the sales cover the costs of her hobby. She wants the process to be atomised, clear, and pleasant for her customers. Nowadays she sells regularly on Etsy.</p>
-        <p>Our main goal was: <span class="accent">to attract more customers to the business and to make the sell-buy process easier for the user and seller.</span></p>
+        <p>The project&rsquo;s name is <span class="accent">&ldquo;Keri Takes the Wheel&rdquo;</span>. <span class="accent">So who is Keri?</span><br />Keri is an American who currently lives in the Netherlands. She works in sales at a software company. A long time ago in high school, she started doing pottery and didn&rsquo;t do it for 12 years, and then she decided to return to her hobby.</p>
+        <p>She wanted <span class="accent">a personal website for herself to sell her pieces</span>. A success for her starts when the sales cover the costs of her hobby. She wants the process to be atomised, clear, and pleasant for her customers.</p>
+        <p>Nowadays she sells regularly on Etsy.</p>
+        <p>Our main goal was: <span class="accent">to attract more customers to the business and to make the sell-buy process easier for the user and seller</span>.</p>
       </div>
       <a class="btn btn--full-case-study" href="https://medium.com/@marharyta.liutova/ux-ui-case-study-keri-takes-the-wheel-b67357ab9bf1" target="_blank" rel="noopener noreferrer">full case study</a>
     </section>

@@ -75,6 +75,7 @@
 			label: "Email",
 			iconDefault: "assets/icons/social-mail-default.png",
 			iconHover: "assets/icons/social-mail-hover.png",
+			classic: "mail",
 			external: false,
 		},
 		{
@@ -82,6 +83,7 @@
 			label: "LinkedIn",
 			iconDefault: "assets/icons/social-linkedin-default.png",
 			iconHover: "assets/icons/social-linkedin-hover.png",
+			classic: "linkedin",
 			external: true,
 		},
 		{
@@ -89,6 +91,7 @@
 			label: "Instagram",
 			iconDefault: "assets/icons/social-instagram-default.png",
 			iconHover: "assets/icons/social-instagram-hover.png",
+			classic: "instagram",
 			external: true,
 		},
 		{
@@ -96,9 +99,22 @@
 			label: "Medium",
 			iconDefault: "assets/icons/social-medium-default.png",
 			iconHover: "assets/icons/social-medium-hover.png",
+			classic: "medium",
 			external: true,
 		},
 	];
+
+	const CV_URL =
+		"https://drive.google.com/file/d/1Jy6H-l5r99QMfcJIxecCVM8DBnH7NbrX/view?usp=sharing";
+
+	// Funky ⇄ Classic switch (Figma "Toggle" 886:2607). aria-checked = Funky on.
+	// State itself lives on <html data-theme>, set by the inline <head> script; main.js wires clicks.
+	const STAR = `<span class="theme-toggle__star"></span>`; // Figma star, assets/classic/star.svg (CSS mask)
+	const THEME_TOGGLE = `<button class="theme-toggle" type="button" role="switch" aria-checked="false" aria-label="Funky style">
+      <span class="theme-toggle__label" data-only="classic" aria-hidden="true">Want to make it <span class="theme-toggle__word theme-toggle__word--funky">funky</span>?</span>
+      <span class="theme-toggle__label" data-only="funky" aria-hidden="true">Want to make it <span class="theme-toggle__word">classic</span>?</span>
+      <span class="theme-toggle__track" aria-hidden="true"><span class="theme-toggle__knob">${STAR}</span></span>
+    </button>`;
 
 	class MargoNav extends HTMLElement {
 		connectedCallback() {
@@ -112,16 +128,18 @@
       <svg class="nav-toggle__icon nav-toggle__icon--close" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><line x1="6" y1="6" x2="18" y2="18"/><line x1="18" y1="6" x2="6" y2="18"/></svg>
     </button>
     <div class="nav-group" id="nav-menu">
-      <a class="nav-link" href="${BASE}index.html#projects"${attr("projects")}>projects</a>
-      <a class="nav-link" href="${BASE}about.html"${attr("about")}>about</a>
+      <a class="nav-link" href="${BASE}index.html#projects"${attr("projects")}>Projects</a>
+      <a class="nav-link" href="${BASE}about.html"${attr("about")}>About</a>
     </div>
     <a class="nav-logo" href="${BASE}index.html" aria-label="Margo home">
-      <img src="${BASE}assets/common/logo.svg" alt="Margo logo" />
+      <img class="nav-logo__img" data-only="funky" src="${BASE}assets/common/logo.svg" alt="Margo logo" />
+      <img class="nav-logo__img nav-logo__img--classic" data-only="classic" src="${BASE}assets/classic/logo-classic.svg" alt="Margo logo" />
     </a>
     <div class="nav-group" id="nav-menu-2">
-      <a class="nav-link" href="https://drive.google.com/file/d/1oLK_0sZ0PricSIvHxVgd5LLqjXzax9H_/view?usp=drive_link" target="_blank" rel="noopener">cv</a>
-      <a class="nav-link" href="mailto:mrg3.designs@gmail.com">contact</a>
+      <a class="nav-link" href="${CV_URL}" target="_blank" rel="noopener">CV</a>
+      <a class="nav-link" href="mailto:mrg3.designs@gmail.com">Contact</a>
     </div>
+    ${THEME_TOGGLE}
   </div>
 </header>`;
 		}
@@ -131,7 +149,9 @@
 		connectedCallback() {
 			const items = SOCIAL_LINKS.map(
 				(i) =>
-					`<a class="sm-strip__item" href="${i.href}"${i.external ? ' target="_blank" rel="noopener"' : ""} aria-label="${i.label}"><img class="sm-strip__icon sm-strip__icon--default" src="${BASE}${i.iconDefault}" alt="" /><img class="sm-strip__icon sm-strip__icon--hover" src="${BASE}${i.iconHover}" alt="" aria-hidden="true" /></a>`,
+					`<a class="sm-strip__item" href="${i.href}"${i.external ? ' target="_blank" rel="noopener"' : ""} aria-label="${i.label}">` +
+					`<img class="sm-strip__icon sm-strip__icon--default" data-only="funky" src="${BASE}${i.iconDefault}" alt="" /><img class="sm-strip__icon sm-strip__icon--hover" data-only="funky" src="${BASE}${i.iconHover}" alt="" aria-hidden="true" />` +
+					`<img class="sm-strip__icon sm-strip__icon--default" data-only="classic" src="${BASE}assets/classic/social-${i.classic}-default.svg" alt="" /><img class="sm-strip__icon sm-strip__icon--hover" data-only="classic" src="${BASE}assets/classic/social-${i.classic}-hover.svg" alt="" aria-hidden="true" /></a>`,
 			).join("\n      ");
 			this.innerHTML = `
 <nav class="sm-strip" aria-label="Social">
@@ -168,7 +188,7 @@
           <p class="testimonial-card__name">${t.name}</p>
           <p class="testimonial-card__role">${t.role}</p>
         </div>
-        <a class="testimonial-card__li" href="${t.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="testimonial-card__li-icon testimonial-card__li-icon--default" src="${BASE}assets/icons/social-linkedin-default.png" alt="" /><img class="testimonial-card__li-icon testimonial-card__li-icon--hover" src="${BASE}assets/icons/social-linkedin-hover.png" alt="" aria-hidden="true" /></a>
+        <a class="testimonial-card__li" href="${t.linkedin}" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="testimonial-card__li-icon testimonial-card__li-icon--default" data-only="funky" src="${BASE}assets/icons/social-linkedin-default.png" alt="" /><img class="testimonial-card__li-icon testimonial-card__li-icon--hover" data-only="funky" src="${BASE}assets/icons/social-linkedin-hover.png" alt="" aria-hidden="true" /><img class="testimonial-card__li-icon testimonial-card__li-icon--default" data-only="classic" src="${BASE}assets/classic/social-linkedin-default.svg" alt="" /><img class="testimonial-card__li-icon testimonial-card__li-icon--hover" data-only="classic" src="${BASE}assets/classic/social-linkedin-hover.svg" alt="" aria-hidden="true" /></a>
       </div>
       <p class="testimonial-card__body testimonial-card__body--short">${t.body}</p>${longBody}
       ${cta}
@@ -194,22 +214,46 @@
 
 	class MargoFooter extends HTMLElement {
 		connectedCallback() {
+			const metaLinks = `
+      <a class="site-footer__brand" href="https://www.mrg22.com/">mrg22.com</a>
+      <a href="${BASE}index.html#projects">Projects</a>
+      <a href="${BASE}about.html">About</a>
+      <a href="${CV_URL}" target="_blank" rel="noopener">CV</a>
+      <a href="mailto:mrg3.designs@gmail.com">Contact</a>`;
+			const social = (href, label) =>
+				`<a href="${href}" target="_blank" rel="noopener">${label}</a>`;
 			this.innerHTML = `
-<footer class="site-footer">
+<footer class="site-footer" data-only="funky">
   <div class="site-footer__paper">
     <div class="site-footer__cta">
       <p class="site-footer__love">I create things with <span class="accent manic">LOVE</span></p>
       <p class="site-footer__contact"><a class="btn btn--text-me" href="mailto:mrg3.designs@gmail.com">text me</a></p>
     </div>
-    <nav class="site-footer__meta" aria-label="Footer">
-      <a class="site-footer__brand" href="https://www.mrg22.com/">mrg22.com</a>
-      <a href="${BASE}index.html#projects">Projects</a>
-      <a href="${BASE}about.html">About</a>
-      <a href="https://drive.google.com/file/d/1oLK_0sZ0PricSIvHxVgd5LLqjXzax9H_/view?usp=drive_link" target="_blank" rel="noopener">CV</a>
-      <a href="mailto:mrg3.designs@gmail.com">Contact</a>
+    <nav class="site-footer__meta" aria-label="Footer">${metaLinks}
     </nav>
   </div>
   <div class="site-footer__hearts" aria-hidden="true"></div>
+  <div class="site-footer__mobile-bar">
+    <p class="site-footer__copy">&copy; 2026 Margo Liutova</p>
+    <span class="site-footer__heart" aria-hidden="true"></span>
+  </div>
+</footer>
+<footer class="site-footer site-footer--classic" data-only="classic">
+  <div class="site-footer__main">
+    <p class="site-footer__love">I create things with <span class="accent">love</span></p>
+    <a class="btn btn--connect" href="mailto:mrg3.designs@gmail.com">connect</a>
+    <nav class="site-footer__meta" aria-label="Footer">${metaLinks}
+    </nav>
+  </div>
+  <div class="site-footer__bar">
+    <p class="site-footer__copy">&copy; 2026 Margo Liutova &middot; <a href="https://www.mrg22.com/">mrg22.com</a></p>
+    <nav class="site-footer__social" aria-label="Social">
+      ${social("https://www.linkedin.com/in/margo-liutova/", "LinkedIn")}<span aria-hidden="true">&middot;</span>
+      ${social("https://www.instagram.com/mrg22_com/", "Instagram")}<span aria-hidden="true">&middot;</span>
+      ${social("https://medium.com/@marharyta.liutova", "Medium")}<span aria-hidden="true">&middot;</span>
+      ${social(CV_URL, "CV")}
+    </nav>
+  </div>
 </footer>`;
 		}
 	}
@@ -227,8 +271,8 @@
 			const next = CASE_ORDER[(idx + 1) % CASE_ORDER.length];
 			this.innerHTML = `
 <nav class="case-nav" aria-label="Between projects">
-  <a class="prev" href="${prev.file}">${prev.label}</a>
-  <a class="next" href="${next.file}">${next.label}</a>
+  <a class="prev" href="${prev.file}" aria-label="Previous project: ${prev.label}"><span class="case-nav__name">${prev.label}</span><span class="case-nav__generic">previous project</span></a>
+  <a class="next" href="${next.file}" aria-label="Next project: ${next.label}"><span class="case-nav__name">${next.label}</span><span class="case-nav__generic">next project</span></a>
 </nav>`;
 		}
 	}

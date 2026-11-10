@@ -3,6 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script>
+    // Theme before first paint (no flash): Classic by default, Funky if chosen via the nav switch.
+    (function () {
+      var t = null;
+      try { t = localStorage.getItem("theme"); } catch (_) {}
+      document.documentElement.dataset.theme = t === "funky" ? "funky" : "classic";
+    })();
+  </script>
   <title>Dynamische kundenprofile — Margo Liutova</title>
   <meta name="description" content="Case study: Dynamische Kundenprofile for R+V — a customer-profile visualisation and comparison tool for a large German insurer." />
   <script>
@@ -22,9 +30,10 @@
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="icon" type="image/svg+xml" href="../assets/common/logo.svg" />
   <link rel="stylesheet" href="../assets/css/main.css" />
+  <link rel="stylesheet" href="../assets/css/classic.css" />
 </head>
 <body class="page-case">
 
@@ -53,15 +62,21 @@
         </div>
         <div class="case-links">
           <p class="case-links__title">Main links</p>
-          <p class="case-links__wip">WORK IN PROGRESS</p>
+          <ul class="case-links__list">
+            <li><a href="https://youtu.be/lyHTXjYkAkc" target="_blank" rel="noopener noreferrer">Video desktop prototype</a></li>
+            <li><a href="https://www.figma.com/proto/FO4lTxr0NxySdmxnSy8fwW/DKP?node-id=0-1&p=f&viewport=83%2C-10%2C0.02&t=qa99eZk8tBNwVSrK-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A6074" target="_blank" rel="noopener noreferrer">Figma desktop prototype</a></li>
+            <li><a href="https://www.figma.com/proto/FO4lTxr0NxySdmxnSy8fwW/DKP?node-id=1-73197&p=f&viewport=319%2C-20%2C0.19&t=qa99eZk8tBNwVSrK-0&scaling=min-zoom&content-scaling=fixed&starting-point-node-id=1%3A73276" target="_blank" rel="noopener noreferrer">Figma mobile prototype</a></li>
+            <li><a href="https://www.figma.com/design/FO4lTxr0NxySdmxnSy8fwW/DKP?node-id=1-73197&t=qa99eZk8tBNwVSrK-1" target="_blank" rel="noopener noreferrer">Figma file</a></li>
+            <li><a href="https://medium.com/@marharyta.liutova/ux-ui-case-study-dynamische-kundenprofile-ae7382d15648" target="_blank" rel="noopener noreferrer">Medium article</a></li>
+          </ul>
         </div>
       </div>
       <div class="case-intro">
         <p>In 2024, I worked on a web application project called <span class="accent">Dynamische Kundenprofile for R+V</span>, one of the largest insurance companies in Germany. The goal of this tool was to help R+V&rsquo;s marketing employees visualise and compare customer group profiles dynamically in a way so the users could display data for up to eight profiles simultaneously or compare them in pairs to identify trends, differences, and similarities.</p>
-        <p>The overall concept was developed by colleagues from my team. My main contribution was the UI design, iterating on different visual approaches, presenting design options, data visualisation opportunities, and refining them based on feedback until we reached a solution that satisfied the client.</p>
+        <p>The overall concept was developed along colleagues from my team who knew their old customer for a long time. My main contribution was the UI design, iterating on different visual approaches, presenting design options, data visualisation opportunities, and refining them based on feedback until we reached a solution that satisfied the client.</p>
         <p>Throughout the project, I collaborated closely with the team, participated in <span class="accent">daily stand-ups</span> and <span class="accent">weekly reviews</span>, and ensured alignment with R+V&rsquo;s <span class="accent">brand guidelines</span>.</p>
       </div>
-      <a class="btn btn--full-case-study btn--disabled" href="#" aria-disabled="true">full case study</a>
+      <a class="btn btn--full-case-study" href="https://medium.com/@marharyta.liutova/ux-ui-case-study-dynamische-kundenprofile-ae7382d15648" target="_blank" rel="noopener noreferrer">full case study</a>
     </section>
 
     <margo-testimonials></margo-testimonials>

@@ -6,6 +6,32 @@
 
 (() => {
 	/* ------------------------------
+	 * 0. Theme (Classic default ⇄ Funky)
+	 *    <html data-theme> is set before first paint by the inline <head> script;
+	 *    here we only sync the switch(es) and handle clicks.
+	 * ---------------------------- */
+	const root = document.documentElement;
+	const toggles = document.querySelectorAll(".theme-toggle");
+	const syncToggles = () => {
+		const funky = root.dataset.theme === "funky";
+		toggles.forEach((t) => t.setAttribute("aria-checked", String(funky)));
+	};
+	syncToggles();
+	toggles.forEach((t) =>
+		t.addEventListener("click", () => {
+			const next = root.dataset.theme === "funky" ? "classic" : "funky";
+			root.dataset.theme = next;
+			try {
+				localStorage.setItem("theme", next);
+			} catch (_) {}
+			syncToggles();
+			// Layout widths change between themes — let width-dependent code (carousel) reset.
+			window.dispatchEvent(new Event("resize"));
+			document.dispatchEvent(new CustomEvent("themechange"));
+		}),
+	);
+
+	/* ------------------------------
 	 * 1. Splash
 	 * ---------------------------- */
 	const splash = document.querySelector(".splash");
@@ -234,12 +260,61 @@
 			card.addEventListener("transitionend", cleanup);
 		};
 
+		// Classic (designer round 2): no "read more" button — the whole card is the control.
+		// Hover turns the quote red (classic.css); click unfolds the long quote in place,
+		// or opens the full letter when the testimonial only has an external link.
+		const isClassic = () => document.documentElement.dataset.theme !== "funky";
+		const canExpand = (card) =>
+			!!card.querySelector(".testimonial-card__body--long");
+		const syncCards = () => {
+			list.querySelectorAll(".testimonial-card").forEach((card) => {
+				if (isClassic()) {
+					card.setAttribute("role", "button");
+					card.setAttribute("tabindex", "0");
+					if (canExpand(card))
+						card.setAttribute(
+							"aria-expanded",
+							String(card.classList.contains("is-expanded")),
+						);
+				} else {
+					card.removeAttribute("role");
+					card.removeAttribute("tabindex");
+					card.removeAttribute("aria-expanded");
+				}
+			});
+		};
+		const activateCard = (card) => {
+			if (canExpand(card)) {
+				animateExpand(card, !card.classList.contains("is-expanded"));
+				syncCards();
+			} else {
+				const link = card.querySelector("a.testimonial-card__cta");
+				if (link) window.open(link.href, "_blank", "noopener");
+			}
+		};
+		syncCards();
+		document.addEventListener("themechange", syncCards);
+
 		list.addEventListener("click", (e) => {
 			const btn = e.target.closest(".testimonial-card__cta");
-			if (!btn || btn.tagName !== "BUTTON") return;
-			const card = btn.closest(".testimonial-card");
-			if (!card) return;
-			animateExpand(card, !card.classList.contains("is-expanded"));
+			if (btn && btn.tagName === "BUTTON") {
+				const card = btn.closest(".testimonial-card");
+				if (card) animateExpand(card, !card.classList.contains("is-expanded"));
+				return;
+			}
+			if (!isClassic()) return;
+			if (e.target.closest("a")) return; // LinkedIn icon keeps its own link
+			const card = e.target.closest(".testimonial-card");
+			if (card) activateCard(card);
+		});
+		list.addEventListener("keydown", (e) => {
+			if (!isClassic()) return;
+			const card = e.target.closest(".testimonial-card");
+			if (!card || e.target !== card) return;
+			if (e.key === "Enter" || e.key === " ") {
+				e.preventDefault();
+				activateCard(card);
+			}
 		});
 	});
 
@@ -248,21 +323,30 @@
 	 *    Correct password (2203) sets a one-shot sessionStorage flag; the detail
 	 *    page consumes and clears it, so every visit re-prompts.
 	 * ---------------------------- */
-	const dkpCard = document.querySelector(".project-card--dkp");
-	if (dkpCard) {
-		const DKP_URL = "projects/dkp.html";
+	// One DKP card per theme (Funky portrait card + Classic landscape card) share one gate.
+	const DKP_URL = "projects/dkp.html";
+	const dkpCards = document.querySelectorAll(".project-card--dkp");
+	if (dkpCards.length) {
 		// Clear legacy persistent flag from earlier versions.
 		try {
 			localStorage.removeItem("dkp-unlocked");
 		} catch (_) {}
-		const isUnlocked = () => sessionStorage.getItem("dkp-unlocked") === "true";
-
+	}
+	const isUnlocked = () => sessionStorage.getItem("dkp-unlocked") === "true";
+	dkpCards.forEach((dkpCard) => {
+		// Classic card has no "password required" button: the locked card itself opens the field.
+		const cardOpensForm = !dkpCard.querySelector(".project-card__cta--locked");
 		const applyState = () => {
 			const unlocked = isUnlocked();
 			dkpCard.dataset.state = unlocked ? "unlocked" : "locked";
 			if (unlocked) {
 				dkpCard.setAttribute("role", "link");
 				dkpCard.setAttribute("tabindex", "0");
+				dkpCard.removeAttribute("aria-label");
+			} else if (cardOpensForm) {
+				dkpCard.setAttribute("role", "button");
+				dkpCard.setAttribute("tabindex", "0");
+				dkpCard.setAttribute("aria-label", "DKP — password required");
 			} else {
 				dkpCard.removeAttribute("role");
 				dkpCard.removeAttribute("tabindex");
@@ -275,15 +359,23 @@
 		};
 
 		dkpCard.addEventListener("click", (e) => {
-			if (dkpCard.dataset.state !== "unlocked") return;
 			if (e.target.closest(".project-card__lock")) return;
-			navigate();
+			if (dkpCard.dataset.state === "unlocked") return navigate();
+			if (cardOpensForm) {
+				// stop bubbling so the document click-outside handler doesn't immediately reclose
+				e.stopPropagation();
+				openForm();
+			}
 		});
 		dkpCard.addEventListener("keydown", (e) => {
-			if (dkpCard.dataset.state !== "unlocked") return;
-			if (e.key === "Enter" || e.key === " ") {
+			if (e.target !== dkpCard) return; // ignore keys typed in the password field
+			if (e.key !== "Enter" && e.key !== " ") return;
+			if (dkpCard.dataset.state === "unlocked") {
 				e.preventDefault();
 				navigate();
+			} else if (cardOpensForm) {
+				e.preventDefault();
+				openForm();
 			}
 		});
 
@@ -332,25 +424,46 @@
 			if (lockedCta?.contains(e.target)) return;
 			closeForm();
 		});
-	}
+	});
+
+	/* ------------------------------
+	 * 4b. Facts carousel (Classic mobile) — arrow advances one card, wraps at the end.
+	 *     Swiping is native (CSS scroll-snap); the button is hidden where it isn't a carousel.
+	 * ---------------------------- */
+	document.querySelectorAll(".facts__next").forEach((btn) => {
+		const track = btn.parentElement.querySelector(".facts__grid");
+		if (!track) return;
+		btn.addEventListener("click", () => {
+			const atEnd =
+				track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
+			track.scrollTo({
+				left: atEnd ? 0 : track.scrollLeft + track.clientWidth,
+				behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+					? "auto"
+					: "smooth",
+			});
+		});
+	});
 
 	/* ------------------------------
 	 * 5. Case pages — hide the sticky prev/next bar once testimonials/footer scroll into view
 	 * ---------------------------- */
 	const caseNav = document.querySelector(".case-nav");
 	if (caseNav && "IntersectionObserver" in window) {
+		// Both footers are observed — the hidden-theme one never intersects.
 		const stopTargets = [
-			document.querySelector(".testimonials"),
-			document.querySelector(".site-footer"),
-		].filter(Boolean);
+			...document.querySelectorAll(".testimonials, .site-footer"),
+		];
 		if (stopTargets.length) {
+			// Callbacks only report targets whose state changed, so remember all of them.
+			const visible = new Set();
 			const io = new IntersectionObserver(
 				(entries) => {
-					// If any stop target is intersecting the viewport, hide the bar
-					const anyVisible = entries.some((e) => e.isIntersecting);
+					entries.forEach((e) =>
+						e.isIntersecting ? visible.add(e.target) : visible.delete(e.target),
+					);
 					// Use a class so the CSS transition drives the animation
-					if (anyVisible) caseNav.classList.add("is-hidden");
-					else caseNav.classList.remove("is-hidden");
+					caseNav.classList.toggle("is-hidden", visible.size > 0);
 				},
 				{ root: null, threshold: 0 },
 			);

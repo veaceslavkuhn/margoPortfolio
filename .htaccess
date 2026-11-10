@@ -20,3 +20,9 @@
         Allow from all
     </IfModule>
 </FilesMatch>
+
+# Design reference snapshot (Figma export) — not for public serving
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^design/ - [F,L]
+</IfModule>

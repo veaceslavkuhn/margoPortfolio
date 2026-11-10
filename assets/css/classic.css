@@ -1,0 +1,911 @@
+@charset "UTF-8";
+/* ------------------------------------------------------------------
+   margo-web — "Classical" theme
+   Figma "Portfolio new" › Hi-fi Desktop flow "Classical" (869:2090),
+   style guide 871:3273, toggle 886:2607, mobile flow 900:3633.
+   Local reference renders: design/figma/screenshots/.
+
+   Loaded after main.css. Every rule is scoped to `:root:not([data-theme="funky"])`, i.e. any page whose
+   <html> is NOT data-theme="funky" (Classic is the default), so the Funky
+   theme (= main.css) is untouched. Markup that only exists in one theme is
+   marked data-only="classic|funky" (see main.css §4).
+
+   Measured from the 1:1 renders:
+     blue  #004ea8  — headings, body copy
+     blue  #4d84c3  — secondary text, 2px section rules (= blue @ 70%)
+     blue  #a6c1e1  — 2px fact-column rules (= blue @ 35%)
+     red   #d54232  — accents, buttons, footer bar
+------------------------------------------------------------------ */
+
+:root:not([data-theme="funky"]) {
+	--paper-texture: none;
+	--font-classic:
+		"Nunito", "Chiron GoRound TC", -apple-system, BlinkMacSystemFont,
+		"Helvetica Neue", sans-serif;
+	--font-body: var(--font-classic);
+	--font-display: var(--font-classic);
+	--blue-70: #4d84c3;
+	--blue-35: #a6c1e1;
+	/* Secondary text: darker than the #4d84c3 in the mock for WCAG AA (5.1:1 on white).
+	   Designer-approved; the 2px rules keep #4d84c3. */
+	--blue-text: #3a6fb0;
+	--arrow-icon: url("../classic/arrow.svg");
+
+	--nav-h: 150px;
+	--nav-h-scrolled: 96px;
+	--nav-logo: 132px;
+	--nav-logo-scrolled: 100px;
+}
+
+/* Shared arrow glyph (thin →), tinted with currentColor */
+:root:not([data-theme="funky"]) .link-arrow::after,
+:root:not([data-theme="funky"]) .case-nav .prev::before,
+:root:not([data-theme="funky"]) .case-nav .next::after,
+:root:not([data-theme="funky"]) .testimonial-nav button::before,
+:root:not([data-theme="funky"]) .project-card__lock-submit::before {
+	content: "";
+	flex-shrink: 0;
+	width: 28px;
+	height: 28px;
+	background-color: currentColor;
+	-webkit-mask: var(--arrow-icon) center / contain no-repeat;
+	mask: var(--arrow-icon) center / contain no-repeat;
+	transition: transform 0.2s ease;
+}
+
+/* In-page anchors (#projects) land below the fixed nav */
+:root:not([data-theme="funky"]) [id] {
+	scroll-margin-top: var(--nav-h-scrolled);
+}
+
+/* -----------------------------
+   Splash
+------------------------------ */
+:root:not([data-theme="funky"]) .splash__logo--classic {
+	width: 240px;
+	height: 240px;
+}
+
+/* -----------------------------
+   Nav — white bar, 2px rule, Nunito links, flat red "MRG" logo
+------------------------------ */
+:root:not([data-theme="funky"]) .site-nav {
+	background: var(--white);
+	border-bottom: 2px solid var(--blue-70);
+}
+:root:not([data-theme="funky"]) .nav-link {
+	font-weight: 700; /* designer round 2: bold nav */
+	font-size: 24px;
+	text-transform: none;
+}
+:root:not([data-theme="funky"]) .nav-logo {
+	display: grid;
+	place-items: center;
+}
+:root:not([data-theme="funky"]) .nav-logo .nav-logo__img--classic {
+	/* Figma "Logo classic version" 132×132 symbol — fills the --nav-logo box */
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+/* -----------------------------
+   Buttons — outlined red primary, blue text + arrow secondary
+------------------------------ */
+:root:not([data-theme="funky"]) .btn {
+	width: 268px;
+	height: 56px;
+	aspect-ratio: auto;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	padding: 0 16px;
+	overflow: visible;
+	text-indent: 0;
+	background: var(--white);
+	border: 2px solid var(--primary-red);
+	border-radius: 4px;
+	font-family: var(--font-classic);
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 1;
+	color: var(--primary-red);
+	transition:
+		background-color 0.2s ease,
+		color 0.2s ease;
+}
+/* Figma button hover (designer export): outline unchanged, arrow slides in after the label */
+:root:not([data-theme="funky"]) .btn::after {
+	content: "";
+	flex-shrink: 0;
+	width: 0;
+	height: 40px;
+	margin-left: 0;
+	opacity: 0;
+	background-color: currentColor;
+	-webkit-mask: var(--arrow-icon) center / contain no-repeat;
+	mask: var(--arrow-icon) center / contain no-repeat;
+	transition:
+		width 0.2s ease,
+		margin-left 0.2s ease,
+		opacity 0.2s ease;
+}
+:root:not([data-theme="funky"]) .btn:hover,
+:root:not([data-theme="funky"]) .btn:focus-visible {
+	background: var(--white);
+	color: var(--primary-red);
+}
+:root:not([data-theme="funky"]) .btn:hover::after,
+:root:not([data-theme="funky"]) .btn:focus-visible::after {
+	width: 40px;
+	margin-left: 12px;
+	opacity: 1;
+}
+:root:not([data-theme="funky"]) .btn--disabled {
+	border-color: #c4c4c4;
+	color: #969696;
+}
+:root:not([data-theme="funky"]) .link-arrow {
+	width: auto;
+	height: 56px;
+	aspect-ratio: auto;
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	padding: 0 16px;
+	overflow: visible;
+	text-indent: 0;
+	background: none;
+	font-family: var(--font-classic);
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 1;
+	color: var(--primary-blue);
+	transition: color 0.2s ease;
+}
+:root:not([data-theme="funky"]) .link-arrow:hover,
+:root:not([data-theme="funky"]) .link-arrow:focus-visible {
+	background: none;
+	color: var(--primary-red);
+}
+/* Designer round 2: button arrows are 40×40 */
+:root:not([data-theme="funky"]) .link-arrow::after {
+	width: 40px;
+	height: 40px;
+}
+:root:not([data-theme="funky"]) .link-arrow:hover::after {
+	transform: translateX(4px);
+}
+
+/* -----------------------------
+   Section heads
+------------------------------ */
+:root:not([data-theme="funky"]) .section-head {
+	margin-bottom: 64px;
+}
+:root:not([data-theme="funky"]) .section-head__title {
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 47px;
+	text-transform: none;
+}
+:root:not([data-theme="funky"]) .section-head__sub {
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 28px;
+	text-transform: none;
+	color: var(--blue-text);
+}
+
+/* -----------------------------
+   Home — hero
+------------------------------ */
+:root:not([data-theme="funky"]) .hero {
+	padding: 44px var(--page-pad-x) 60px;
+}
+:root:not([data-theme="funky"]) .hero__title {
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 48px;
+}
+:root:not([data-theme="funky"]) .hero__title .accent {
+	text-transform: none;
+	font-weight: 700;
+}
+:root:not([data-theme="funky"]) .hero__title .accent--name {
+	color: inherit;
+}
+:root:not([data-theme="funky"]) .hero__sub {
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 29px;
+	color: var(--blue-text);
+}
+
+/* Home — facts: three ruled columns */
+:root:not([data-theme="funky"]) .facts {
+	padding: 40px var(--page-pad-x) 20px;
+}
+:root:not([data-theme="funky"]) .facts__grid {
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	justify-items: stretch;
+}
+:root:not([data-theme="funky"]) .fact-card {
+	max-width: none;
+	gap: 8px;
+	padding: 24px;
+	border-top: 2px solid var(--blue-35);
+}
+:root:not([data-theme="funky"]) .fact-card::after {
+	display: none;
+}
+:root:not([data-theme="funky"]) .fact-card__title {
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+	text-transform: none;
+}
+:root:not([data-theme="funky"]) .fact-card__body {
+	font-size: 16px;
+	line-height: 24px;
+}
+:root:not([data-theme="funky"]) .fact-card__body strong {
+	font-weight: 600;
+}
+
+/* -----------------------------
+   Home — project cards (2×2, landscape image + text block)
+   Figma cards 879:5452–879:5455: 628 wide, image 628×261 with 2px rule,
+   title 24/700, description 20/400, meta 16 @ blue-70.
+------------------------------ */
+:root:not([data-theme="funky"]) .projects {
+	padding: 80px var(--page-pad-x);
+}
+.project-grid--classic {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 32px 24px;
+	max-width: 1280px;
+	margin-inline: auto;
+}
+.pcard {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	color: var(--primary-blue);
+	text-decoration: none;
+}
+.pcard__figure {
+	position: relative;
+	aspect-ratio: 628 / 261;
+	overflow: hidden;
+	border-bottom: 2px solid var(--blue-70);
+	background: #eef2f8;
+}
+.pcard__figure img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	transition:
+		transform 0.5s ease,
+		filter 0.3s ease;
+}
+.pcard:hover .pcard__figure img,
+.pcard:focus-visible .pcard__figure img {
+	transform: scale(1.03);
+}
+.pcard__body {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	padding: 22px 16px 0;
+}
+.pcard__title {
+	font-family: var(--font-body);
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 33px;
+	color: var(--primary-blue);
+	transition: color 0.2s ease;
+}
+.pcard:hover .pcard__title,
+.pcard:focus-visible .pcard__title {
+	color: var(--primary-red);
+}
+.pcard__desc {
+	font-family: var(--font-body);
+	font-size: 20px;
+	line-height: 24px;
+	color: var(--primary-blue);
+}
+.pcard__meta {
+	margin-top: 4px;
+	font-family: var(--font-body);
+	font-size: 16px;
+	line-height: 24px;
+	color: var(--blue-text, #3a6fb0);
+}
+
+/* DKP — password gate (shared JS with the Funky card, see main.js §4) */
+.pcard.project-card--dkp[data-state="locked"] .pcard__figure img {
+	filter: blur(10px);
+	transform: scale(1.08);
+}
+.pcard.project-card--dkp[data-state="unlocked"] {
+	cursor: pointer;
+}
+:root:not([data-theme="funky"]) .pcard .project-card__lock {
+	width: 280px;
+	background: var(--white);
+	border: 2px solid var(--primary-blue);
+	border-radius: 2px;
+	padding: 0 4px 0 16px;
+}
+:root:not([data-theme="funky"]) .pcard .project-card__lock[data-error="true"] {
+	border-color: var(--primary-red);
+}
+:root:not([data-theme="funky"]) .pcard .project-card__lock-submit {
+	color: var(--primary-blue);
+}
+:root:not([data-theme="funky"]) .pcard .project-card__lock-submit img {
+	display: none;
+}
+:root:not([data-theme="funky"])
+	.pcard
+	.project-card__lock:has(.project-card__lock-input:not(:placeholder-shown))
+	.project-card__lock-submit,
+:root:not([data-theme="funky"]) .pcard .project-card__lock[data-error="true"] .project-card__lock-submit,
+:root:not([data-theme="funky"]) .pcard .project-card__lock-submit:hover {
+	color: var(--primary-red);
+}
+
+/* -----------------------------
+   Testimonials — no avatars, 2px top rule, quote first, name + LinkedIn below,
+   single "next" arrow (Figma 873:5733)
+------------------------------ */
+:root:not([data-theme="funky"]) .testimonials {
+	padding: 80px var(--page-pad-x) 60px;
+}
+:root:not([data-theme="funky"]) .testimonials .section-head {
+	margin-bottom: 24px;
+}
+:root:not([data-theme="funky"]) .testimonial-card {
+	min-height: 0;
+	justify-content: flex-start;
+	gap: 16px;
+	padding: 32px 24px 24px;
+	background: transparent;
+	border-top: 2px solid var(--blue-70);
+}
+:root:not([data-theme="funky"]) .testimonial-card::after {
+	display: none;
+}
+/* Designer round 2: the card is clickable; hovering turns the quote red */
+:root:not([data-theme="funky"]) .testimonial-card {
+	cursor: pointer;
+}
+:root:not([data-theme="funky"]) .testimonial-card__body {
+	transition: color 0.2s ease;
+}
+:root:not([data-theme="funky"]) .testimonial-card:hover .testimonial-card__body,
+:root:not([data-theme="funky"]) .testimonial-card:focus-visible .testimonial-card__body {
+	color: var(--primary-red);
+}
+:root:not([data-theme="funky"]) .testimonial-card:focus-visible {
+	outline-offset: -2px;
+}
+:root:not([data-theme="funky"]) .testimonial-card__body {
+	font-weight: 700;
+	font-size: 16px;
+	line-height: 24px;
+}
+/* Designer: no "read more" in Classic */
+:root:not([data-theme="funky"]) .testimonial-card__cta {
+	display: none;
+}
+:root:not([data-theme="funky"]) .testimonial-card__head {
+	order: 2;
+	min-height: 0;
+	gap: 12px;
+	align-items: flex-end;
+}
+:root:not([data-theme="funky"]) .testimonial-card__avatar {
+	display: none;
+}
+:root:not([data-theme="funky"]) .testimonial-card__name {
+	padding-right: 0;
+	font-weight: 700;
+	font-size: 14px;
+	line-height: 18px;
+	text-transform: none;
+}
+:root:not([data-theme="funky"]) .testimonial-card__role {
+	font-weight: 300;
+	font-size: 14px;
+	line-height: 18px;
+}
+:root:not([data-theme="funky"]) .testimonial-card__li {
+	position: relative;
+	top: auto;
+	right: auto;
+	width: 26px;
+	height: 26px;
+	margin-left: auto;
+	flex-shrink: 0;
+}
+:root:not([data-theme="funky"]) .testimonial-nav {
+	justify-content: flex-end;
+	margin-top: 40px;
+}
+:root:not([data-theme="funky"]) .testimonial-nav .prev {
+	display: none;
+}
+:root:not([data-theme="funky"]) .testimonial-nav button {
+	width: 32px;
+	height: 32px;
+	color: var(--primary-blue);
+}
+:root:not([data-theme="funky"]) .testimonial-nav button:hover,
+:root:not([data-theme="funky"]) .testimonial-nav button:focus-visible {
+	color: var(--primary-red);
+	transform: none;
+}
+:root:not([data-theme="funky"]) .testimonial-nav button:hover::before {
+	transform: translateX(4px);
+}
+:root:not([data-theme="funky"]) .testimonial-nav button img {
+	display: none;
+}
+:root:not([data-theme="funky"]) .testimonial-nav button::before {
+	width: 32px;
+	height: 32px;
+}
+
+/* -----------------------------
+   Footer (classic markup — components.js)
+------------------------------ */
+.site-footer--classic {
+	padding-top: 40px;
+	background: var(--white);
+}
+.site-footer__main {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 32px 20px 56px;
+	border-top: 2px solid var(--blue-70, #4d84c3);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 40px;
+}
+.site-footer--classic .site-footer__love {
+	max-width: none;
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 47px;
+	text-align: center;
+}
+.site-footer--classic .site-footer__meta {
+	max-width: none;
+}
+.site-footer__bar {
+	min-height: 116px;
+	padding: 24px 80px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px 40px;
+	flex-wrap: wrap;
+	background: var(--primary-red);
+	color: var(--white);
+	font-family: var(--font-body);
+	font-weight: 600;
+	font-size: 14px;
+	line-height: 1.4;
+}
+.site-footer__social {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+.site-footer__bar a {
+	color: inherit;
+}
+.site-footer__bar a:hover,
+.site-footer__bar a:focus-visible {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+
+/* -----------------------------
+   Case study pages (Figma 869:2159 etc.)
+------------------------------ */
+:root:not([data-theme="funky"]) .case-title {
+	font-weight: 700;
+	font-size: 40px;
+	line-height: 47px;
+	text-transform: none;
+	padding: 40px var(--page-pad-x) 32px;
+}
+:root:not([data-theme="funky"]) .case-hero-img {
+	padding: 0 var(--page-pad-x);
+}
+:root:not([data-theme="funky"]) .case-hero-img__frame {
+	max-width: 1062px;
+	aspect-ratio: 1062 / 443;
+	border-radius: 8px;
+	-webkit-mask-image: none;
+	mask-image: none;
+}
+:root:not([data-theme="funky"]) .case-hero-img__frame::after {
+	display: none;
+}
+/* Prev/next: same sticky bottom bar + hide-on-scroll as Funky (designer), Classic styling */
+:root:not([data-theme="funky"]) .case-nav {
+	padding: 16px var(--page-pad-x);
+	background: var(--white);
+	border-top: 2px solid var(--blue-70);
+	font-family: var(--font-classic);
+	font-weight: 600;
+	font-size: 24px;
+	line-height: 1.2;
+	text-transform: none;
+}
+:root:not([data-theme="funky"]) .case-nav .prev::before {
+	transform: scaleX(-1);
+}
+:root:not([data-theme="funky"]) .case-nav .prev:hover::before {
+	transform: scaleX(-1) translateX(4px);
+}
+:root:not([data-theme="funky"]) .case-nav .next:hover::after {
+	transform: translateX(4px);
+}
+
+:root:not([data-theme="funky"]) .case-overview {
+	padding: 80px var(--page-pad-x) 40px;
+	gap: 24px;
+}
+:root:not([data-theme="funky"]) .case-meta,
+:root:not([data-theme="funky"]) .case-links {
+	min-height: 0;
+	padding: 24px;
+	border-top: 2px solid var(--blue-70);
+}
+:root:not([data-theme="funky"]) .case-meta::after,
+:root:not([data-theme="funky"]) .case-links::after {
+	display: none;
+}
+:root:not([data-theme="funky"]) .case-meta {
+	gap: 16px 8px;
+	align-content: start;
+}
+:root:not([data-theme="funky"]) .case-meta p {
+	font-size: 20px;
+	line-height: 1.5;
+}
+:root:not([data-theme="funky"]) .case-links {
+	gap: 20px;
+}
+:root:not([data-theme="funky"]) .case-links__title {
+	font-weight: 700;
+	font-size: 20px;
+	line-height: 28px;
+}
+:root:not([data-theme="funky"]) .case-links__list {
+	gap: 8px;
+}
+:root:not([data-theme="funky"]) .case-links__list a {
+	font-weight: 400;
+	font-size: 20px;
+	line-height: 1.5;
+}
+:root:not([data-theme="funky"]) .case-links__list a:hover {
+	text-decoration: underline;
+	text-underline-offset: 3px;
+}
+:root:not([data-theme="funky"]) .case-intro {
+	gap: 36px;
+}
+:root:not([data-theme="funky"]) .case-intro p {
+	font-size: 20px;
+	line-height: 36px;
+}
+
+/* -----------------------------
+   About (Figma 895:3484)
+------------------------------ */
+.about-intro {
+	max-width: calc(1281px + var(--page-pad-x) * 2);
+	margin: 0 auto;
+	padding: 100px var(--page-pad-x) 40px;
+	display: grid;
+	grid-template-columns: 262px minmax(0, 755px);
+	justify-content: center;
+	align-items: center;
+	gap: 40px;
+}
+.about-intro__photo img {
+	width: 100%;
+	height: auto;
+}
+.about-intro__body {
+	display: flex;
+	flex-direction: column;
+	gap: 30px;
+}
+.about-intro__body p {
+	font-family: var(--font-body);
+	font-size: 20px;
+	line-height: 1.5;
+	color: var(--primary-blue);
+}
+.about-intro__body .accent {
+	color: var(--primary-red);
+}
+
+:root:not([data-theme="funky"]) .about-bio-stack {
+	gap: 100px;
+	padding: 100px var(--page-pad-x) 40px;
+	max-width: calc(1281px + var(--page-pad-x) * 2);
+}
+:root:not([data-theme="funky"]) .about-bio,
+:root:not([data-theme="funky"]) .about-bio--picture {
+	display: grid;
+	grid-template-columns: minmax(0, 628px) minmax(0, 581px);
+	justify-content: space-between;
+	align-items: center;
+	gap: 40px;
+}
+/* Row 1: text left, polaroids right */
+:root:not([data-theme="funky"]) .about-bio > .about-bio__polaroids {
+	order: 2;
+}
+/* Row 2: picture left, text right */
+:root:not([data-theme="funky"]) .about-bio--picture {
+	grid-template-columns: minmax(0, 498px) minmax(0, 628px);
+}
+:root:not([data-theme="funky"]) .about-bio--picture > .about-bio__polaroids {
+	order: -1;
+	justify-self: center;
+}
+:root:not([data-theme="funky"]) .about-bio__body,
+:root:not([data-theme="funky"]) .about-bio--picture .about-bio__body {
+	width: auto;
+	gap: 30px;
+	padding-top: 24px;
+	border-top: 2px solid var(--blue-70);
+}
+:root:not([data-theme="funky"]) .about-bio__body p {
+	font-size: 20px;
+	line-height: 1.5;
+}
+
+/* Facts carousel arrow (carousel itself is shared, main.css ≤860px): Classic thin arrow */
+:root:not([data-theme="funky"]) .facts__next::before {
+	-webkit-mask-image: url("../classic/arrow.svg");
+	mask-image: url("../classic/arrow.svg");
+}
+
+/* -----------------------------
+   Responsive
+------------------------------ */
+@media (max-width: 1180px) {
+	:root:not([data-theme="funky"]) {
+		--page-pad-x: 40px;
+		--nav-h: 130px;
+		--nav-h-scrolled: 88px;
+		--nav-logo: 110px;
+		--nav-logo-scrolled: 90px;
+	}
+	:root:not([data-theme="funky"]) .nav-link {
+		font-size: 20px;
+	}
+	:root:not([data-theme="funky"]) .theme-toggle {
+		right: 20px;
+	}
+	.about-intro {
+		grid-template-columns: 220px minmax(0, 1fr);
+	}
+	:root:not([data-theme="funky"]) .about-bio,
+	:root:not([data-theme="funky"]) .about-bio--picture {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+	:root:not([data-theme="funky"]) .about-bio > .about-bio__polaroids {
+		justify-self: center;
+		max-width: 480px;
+	}
+	:root:not([data-theme="funky"]) .about-bio--picture > .about-bio__polaroids {
+		width: min(100%, 420px);
+	}
+}
+
+@media (max-width: 860px) {
+	:root:not([data-theme="funky"]) {
+		--page-pad-x: 16px;
+		--nav-h: 96px;
+		--nav-h-scrolled: 64px;
+		--nav-logo: 80px;
+		--nav-logo-scrolled: 64px;
+		/* Classic menu icons (Figma mobile nav component) */
+		--menu-icon: url("../icons/menu-classic.svg");
+		--close-icon: url("../icons/close-classic.svg");
+	}
+	/* Open menu: Nunito links, centred (Figma Classic open state) */
+	:root:not([data-theme="funky"]) .site-nav.is-open .nav-group .nav-link {
+		font-weight: 600;
+		font-size: 20px;
+	}
+
+	:root:not([data-theme="funky"]) .hero__title {
+		font-size: 32px;
+		line-height: 1.2;
+	}
+	:root:not([data-theme="funky"]) .hero__sub {
+		font-size: 18px;
+		line-height: 1.3;
+	}
+	:root:not([data-theme="funky"]) .hero__sub br {
+		display: none;
+	}
+	:root:not([data-theme="funky"]) .btn {
+		width: 220px;
+		height: 48px;
+		font-size: 20px;
+	}
+	:root:not([data-theme="funky"]) .link-arrow {
+		height: 48px;
+		font-size: 20px;
+	}
+	:root:not([data-theme="funky"]) .section-head {
+		margin-bottom: 32px;
+	}
+	:root:not([data-theme="funky"]) .section-head__title {
+		font-size: 32px;
+		line-height: 1.2;
+	}
+	:root:not([data-theme="funky"]) .section-head__sub {
+		font-size: 20px;
+	}
+	:root:not([data-theme="funky"]) .projects {
+		padding: 60px var(--page-pad-x);
+	}
+	.project-grid--classic {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+	.pcard__body {
+		padding: 16px 4px 0;
+	}
+	.pcard__title {
+		font-size: 22px;
+		line-height: 1.3;
+	}
+	.pcard__desc {
+		font-size: 18px;
+		line-height: 1.3;
+	}
+	.pcard__meta {
+		font-size: 14px;
+	}
+	:root:not([data-theme="funky"]) .pcard .project-card__lock {
+		width: 240px;
+	}
+
+	:root:not([data-theme="funky"]) .testimonials {
+		padding: 60px var(--page-pad-x) 40px;
+	}
+	:root:not([data-theme="funky"]) .testimonial-card {
+		padding: 24px 8px 16px;
+	}
+	:root:not([data-theme="funky"]) .testimonial-nav {
+		margin-top: 16px;
+	}
+
+	.site-footer__main {
+		padding: 32px var(--page-pad-x) 40px;
+		gap: 28px;
+	}
+	.site-footer--classic .site-footer__love {
+		font-size: 32px;
+		line-height: 1.3;
+	}
+	.site-footer--classic .site-footer__meta {
+		flex-wrap: wrap;
+		gap: 8px 16px;
+	}
+	.site-footer--classic .site-footer__meta a.site-footer__brand {
+		font-size: 18px;
+	}
+	.site-footer__bar {
+		min-height: 0;
+		padding: 20px var(--page-pad-x);
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 8px;
+	}
+
+	:root:not([data-theme="funky"]) .case-title {
+		font-size: 32px;
+		line-height: 1.2;
+		padding: 24px var(--page-pad-x) 24px;
+	}
+	:root:not([data-theme="funky"]) .case-hero-img__frame {
+		aspect-ratio: 358 / 170;
+	}
+	/* inline under the hero on phones (designer mobile Project frame) */
+	:root:not([data-theme="funky"]) .case-nav {
+		padding: 28px 24px 8px;
+		font-size: 16px;
+		font-weight: 700;
+		background: transparent;
+		border-top: 0;
+	}
+	:root:not([data-theme="funky"]) .case-nav .prev::before,
+	:root:not([data-theme="funky"]) .case-nav .next::after {
+		width: 24px;
+		height: 24px;
+	}
+	:root:not([data-theme="funky"]) .case-overview {
+		padding: 56px 16px 32px;
+	}
+	:root:not([data-theme="funky"]) .case-overview .section-head__title {
+		font-size: 32px;
+		line-height: 40px;
+	}
+	:root:not([data-theme="funky"]) .case-overview__grid {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+	:root:not([data-theme="funky"]) .case-meta {
+		padding: 20px 8px;
+	}
+	:root:not([data-theme="funky"]) .case-links {
+		padding: 20px 8px;
+		gap: 12px;
+	}
+	:root:not([data-theme="funky"]) .case-meta p,
+	:root:not([data-theme="funky"]) .case-links__title,
+	:root:not([data-theme="funky"]) .case-links__list a {
+		font-size: 18px;
+	}
+	:root:not([data-theme="funky"]) .case-intro {
+		gap: 16px;
+	}
+	:root:not([data-theme="funky"]) .case-intro p {
+		font-size: 16px;
+		line-height: 1.5;
+	}
+
+	.about-intro {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		padding-top: 32px;
+		gap: 24px;
+	}
+	.about-intro__photo {
+		width: 200px;
+	}
+	.about-intro__body,
+	:root:not([data-theme="funky"]) .about-bio__body {
+		gap: 16px;
+	}
+	.about-intro__body p,
+	:root:not([data-theme="funky"]) .about-bio__body p {
+		font-size: 16px;
+	}
+	:root:not([data-theme="funky"]) .about-bio-stack {
+		gap: 56px;
+		padding: 56px var(--page-pad-x) 32px;
+	}
+	:root:not([data-theme="funky"]) .about-bio--picture > .about-bio__polaroids {
+		width: min(100%, 320px);
+	}
+}
+
+/* DKP (Classic): the locked card itself is the trigger for the password field */
+.pcard.project-card--dkp[data-state="locked"] {
+	cursor: pointer;
+}
+
